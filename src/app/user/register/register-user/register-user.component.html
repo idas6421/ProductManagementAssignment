@@ -1,0 +1,69 @@
+<div class='container main-content'>
+    <div class="card">
+        <div class="card-header">
+            Register
+        </div>
+        <div class="card-body">
+            <div class="loginContent">
+                <p class="alert-danger">{{error}}</p>
+                <div class="loginDiv">
+                    <form class="needs-validation" [formGroup]="form" novalidate>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="firstname">First Name</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" formControlName="firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" placeholder="First Name (required)" />
+                                <div class="invalid-feedback" *ngIf="submitted && f.firstname.errors">
+                                    First Name is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="lastname">Last Name</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" placeholder="Last Name (required)" />
+                                <div class="invalid-feedback" *ngIf="submitted && f.lastname.errors">
+                                    Last Name is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="email">Email ID</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email Id (required)" />
+                                <div class="invalid-feedback" *ngIf="submitted && f.email.errors">
+                                    <div *ngIf="f.email.errors.required">Email id is required</div>
+                                    <div *ngIf="f.email.errors.email">Email id is invalid</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="password">Password</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password (required)" />
+                                <div class="invalid-feedback" *ngIf="submitted && f.password.errors">
+                                    Password is required
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="col-md-4 col-md-offset-2">
+                                <span>
+                                    <button class="btn btn-primary" (click)="onSubmit()">Register</button>
+                                </span>
+                                <span>
+                                    <a href="/welcome" class="btn btn-light">Cancel</a>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                    <p class="col-md-4 col-md-offset-2">
+                        Already have an account? <a routerLink="../login">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

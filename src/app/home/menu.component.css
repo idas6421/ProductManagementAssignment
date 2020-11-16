@@ -1,0 +1,9 @@
+.bg-light {
+    background-color: var(--background-bg-light) !important;
+    font-weight: bold;
+}
+
+.navbar-light .navbar-brand,
+.navbar-light .navbar-brand:hover {
+    color: var(--color-navbar-brand);
+}

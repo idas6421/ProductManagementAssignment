@@ -1,0 +1,152 @@
+:root {
+    /* btn */
+    --background-btn: #007bff;
+    --border-btn: #007bff;
+    --background-btn-active: #0062cc;
+    --border-btn-active: #005cbf;
+    --background-btn-hover: #0069d9;
+    --border-btn-hover: #0062cc;
+    --background-btn-focus: #0069d9;
+    --border-btn-focus: #0062cc;
+    --color-btn-focus: #fff;
+    --box-shadow-btn-focus: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+    --background-btn-disabled: #007bff;
+    --border-btn-disabled: #007bff;
+    --color-btn-disabled: #fff;
+    /*btn-light*/
+    --background-btn-light: #f8f9fa;
+    --border-btn-light: #f8f9fa;
+    --color-btn-light: #212529;
+    --background-btn-light-hover: #e2e6ea;
+    --border-btn-light-hover: #dae0e5;
+    --color-btn-light-hover: #212529;
+    --background-btn-light-hover: #e2e6ea;
+    --border-btn-light-hover: #dae0e5;
+    --color-btn-light-hover: #212529;
+    --background-btn-light-active: #e2e6ea;
+    --border-btn-light-active: #d3d9df;
+    --color-btn-light-active: #212529;
+    --background-btn-light-focus: #e2e6ea;
+    --border-btn-light-focus: #d3d9df;
+    --color-btn-light-focus: #212529;
+    --box-shadow-btn-light-focus: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
+    /*list-group-item*/
+    --background-list-group-item: #fff;
+    --border-list-group-item: 1px solid rgba(0, 0, 0, 0.125);
+    --background-list-group-item-hover: #f8f9fa;
+    --color-list-group-item-hover: #495057;
+    --background-list-group-item-active: #e9ecef;
+    --color-list-group-item-active: #212529;
+    --background-list-group-item-css-active: #007bff;
+    --border-list-group-item-css-active: #007bff;
+    /*card-header*/
+    --background-card-header: rgba(0, 0, 0, 0.03);
+    --border-card-header: 1px solid rgba(0, 0, 0, 0.125);
+    /*bg-light*/
+    --background-bg-light: #007bff;
+    --color-navbar-brand: #fff;
+}
+
+li {
+    font-size: large;
+}
+
+div.panel-heading {
+    font-size: x-large;
+}
+
+body {
+    margin-top: 50px;
+}
+
+.btn {
+    background-color: var(--background-btn) !important;
+    border-color: var(--border-btn) !important;
+}
+
+.btn:not(:disabled):not(.disabled):active,
+.btn:not(:disabled):not(.disabled).active,
+.show>.btn.dropdown-toggle {
+    background-color: var(--background-btn-active) !important;
+    border-color: var(--border-btn-active) !important;
+}
+
+.btn:hover {
+    background-color: var(--background-btn-hover) !important;
+    border-color: var(--border-btn-hover) !important;
+}
+
+.btn:focus,
+.btn.focus {
+    color: var(--color-btn-focus) !important;
+    background-color: var(--background-btn-focus) !important;
+    border-color: var(--border-btn-focus) !important;
+    box-shadow: var(--box-shadow-btn-focus) !important;
+}
+
+.btn.disabled,
+.btn:disabled {
+    color: var(--color-btn-disabled) !important;
+    background-color: var(--background-btn-disabled) !important;
+    border-color: var(--border-btn-disabled) !important;
+}
+
+.btn-light:focus,
+.btn-light.focus {
+    color: var(--color-btn-light-focus) !important;
+    background-color: var(--background-btn-light-focus) !important;
+    border-color: var(--border-btn-light-focus) !important;
+    box-shadow: var(--box-shadow-btn-light-focus) !important;
+}
+
+.btn-light:not(:disabled):not(.disabled):active,
+.btn-light:not(:disabled):not(.disabled).active,
+.show>.btn-light.dropdown-toggle {
+    color: var(--color-btn-light-active) !important;
+    background-color: var(--background-btn-light-active) !important;
+    border-color: var(--border-btn-light-active) !important;
+}
+
+.btn-light:hover {
+    color: var(--color-btn-light-hover) !important;
+    background-color: var(--background-btn-light-hover) !important;
+    border-color: var(--border-btn-light-hover) !important;
+}
+
+.btn-light {
+    color: var(--color-btn-light) !important;
+    background-color: var(--background-btn-light) !important;
+    border-color: var(--border-btn-light) !important;
+}
+
+.list-group-item {
+    background-color: var(--background-list-group-item) !important;
+    border: var(--border-list-group-item) !important;
+}
+
+.list-group-item:hover,
+.list-group-item:focus {
+    color: var(--color-list-group-item-hover) !important;
+    background-color: var(--background-list-group-item-hover) !important;
+}
+
+.list-group-item:active {
+    color: var(--color-list-group-item-active) !important;
+    background-color: var(--background-list-group-item-active) !important;
+}
+
+.list-group-item.active {
+    background-color: var(--background-list-group-item-css-active) !important;
+    border-color: var(--border-list-group-item-css-active) !important;
+    color: var(--background-list-group-item) !important;
+}
+
+.card-header,
+.card-footer {
+    background-color: var(--background-card-header) !important;
+    border-bottom: var(--border-card-header) !important;
+}
+
+.bg-light {
+    background-color: var(--background-bg-light) !important;
+}

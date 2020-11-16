@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "email": "admin@xyz.com",
+      "password": "$2a$10$wtoa9bDstpqtbLDKk9Jyfu8RP5XzYKHerL/fIwRMeAPgnYg9o8v9.",
+      "firstname": "Indrani",
+      "lastname": "Das",
+      "id": 1
+    },
+    {
+      "email": "john@xyz.com",
+      "password": "$2a$10$xw/o4NPOdvNqQbpNUOLKmOY3YeqDHctj2n3xXiGA1jSQMG/uBTbx6",
+      "firstname": "john",
+      "lastname": "johm",
+      "id": 2
+    },
+    {
+      "email": "tom@xyz.com",
+      "password": "$2a$10$r0tMShoKHB50ti1T2DDpqehfRLVSXtPzJYFXl6zYqtN3HGQKEdy4W",
+      "firstname": "tom",
+      "lastname": "tom",
+      "id": 3
+    },
+    {
+      "email": "abc@abc.com",
+      "password": "$2a$10$3fTXwpPyGU7Appwo1Ghg4u68afwkTViv9GRtgkbsmAkDsySMkncta",
+      "firstname": "ljdhjlkf",
+      "lastname": "jkdhkj",
+      "id": 4
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "productName": "Leaf Rake",
+      "productCode": "GDN-0011",
+      "description": "Leaf rake with 48-inch wooden handle",
+      "starRating": "3.2"
+    },
+    {
+      "id": 2,
+      "productName": "Garden Cart",
+      "productCode": "GDN-0023",
+      "description": "15 gallon capacity rolling garden cart",
+      "starRating": 4.2
+    },
+    {
+      "id": 5,
+      "productName": "Hammer",
+      "productCode": "TBX-0048",
+      "description": "Curved claw steel hammer",
+      "starRating": 4.8
+    },
+    {
+      "id": 8,
+      "productName": "Saw",
+      "productCode": "TBX-0022",
+      "description": "15-inch steel blade hand saw",
+      "starRating": 3.7
+    },
+    {
+      "id": 10,
+      "productName": "Video Game Controller",
+      "productCode": "GMG-0042",
+      "description": "Standard two-button video game controller",
+      "starRating": 4.6
+    },
+    {
+      "id": 13,
+      "productName": "HP Laptop",
+      "productCode": "OPU-0099",
+      "description": "",
+      "starRating": "4"
+    }
+  ]
+}
