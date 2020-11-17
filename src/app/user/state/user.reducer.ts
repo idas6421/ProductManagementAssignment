@@ -33,7 +33,7 @@ const initialState: UserState = {
   users: []
 };
 
-const getUserFeatureState = createFeatureSelector<UserState>('users');
+export const getUserFeatureState = createFeatureSelector<UserState>('users');
 
 export const getMaskUserName = createSelector(
   getUserFeatureState,
@@ -78,7 +78,7 @@ export const userReducer = createReducer<UserState>(
     return {
       ...state,
       isAuthenticated: true,
-      loginToken: action.accessToken.accessToken,
+      loginToken: action.accessToken,
       error: ''
     };
   }),

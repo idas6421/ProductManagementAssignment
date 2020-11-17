@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   maskUserName$: Observable<boolean>;
 
-  constructor(private store: Store<State>, private authService: AuthService, private router: Router) { }
+  constructor(private store: Store<State>, private router: Router) { }
 
   ngOnInit(): void {
     this.maskUserName$ = this.store.select(getMaskUserName);
