@@ -26,11 +26,11 @@ export class ProductListComponent implements OnInit {
   constructor(private store:Store<State>) { }
 
   ngOnInit(): void {
+    this.store.dispatch(ProductActions.loadProducts());
+
     this.products$ = this.store.select(getProducts);
 
     this.errorMessage$ = this.store.select(getError);
-
-    this.store.dispatch(ProductActions.loadProducts());
 
     this.selectedProduct$ = this.store.select(getCurrentProduct);
 

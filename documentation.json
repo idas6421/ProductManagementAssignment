@@ -1290,7 +1290,7 @@
         },
         {
             "name": "LoginComponent",
-            "id": "component-LoginComponent-5b9d3079733873cabf4db2bc3879844c",
+            "id": "component-LoginComponent-fce508d1e0793539845b8e36325bd88b",
             "file": "src/app/user/login.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1322,6 +1322,14 @@
                     "optional": false,
                     "description": "",
                     "line": 18
+                },
+                {
+                    "name": "submitted",
+                    "defaultValue": "false",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
                 }
             ],
             "methodsClass": [
@@ -1377,7 +1385,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { NgForm } from '@angular/forms';\r\nimport { Router } from '@angular/router';\r\n\r\nimport { AuthService } from './auth.service';\r\nimport { Observable } from 'rxjs';\r\nimport { Store } from '@ngrx/store';\r\n\r\nimport { getMaskUserName, State, getAccessToken } from './state/user.reducer';\r\nimport * as UserActions from './state/user.actions'\r\nimport { User } from './user';\r\n\r\n@Component({\r\n  templateUrl: './login.component.html',\r\n  styleUrls: ['./login.component.css']\r\n})\r\nexport class LoginComponent implements OnInit {\r\n  pageTitle = 'Log In';\r\n\r\n  maskUserName$: Observable<boolean>;\r\n\r\n  constructor(private store: Store<State>, private router: Router) { }\r\n\r\n  ngOnInit(): void {\r\n    this.maskUserName$ = this.store.select(getMaskUserName);\r\n  }\r\n\r\n  cancel(): void {\r\n    this.router.navigate(['welcome']);\r\n  }\r\n\r\n  checkChanged(): void {\r\n    this.store.dispatch(UserActions.maskUserName());\r\n  }\r\n\r\n  login(loginForm: NgForm): void {\r\n    if (loginForm && loginForm.valid) {\r\n      const user: User = {\r\n        email: loginForm.form.value.userName,\r\n        password: loginForm.form.value.password,\r\n        firstname: null,\r\n        lastname: null\r\n      };      \r\n      \r\n      this.store.dispatch(UserActions.login({ user }));\r\n\r\n      this.store.select(getAccessToken).subscribe(res =>  {\r\n        if (res) {\r\n          this.router.navigate(['/products']);\r\n        }\r\n      });      \r\n    }    \r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { NgForm } from '@angular/forms';\r\nimport { Router } from '@angular/router';\r\n\r\nimport { AuthService } from './auth.service';\r\nimport { Observable } from 'rxjs';\r\nimport { Store } from '@ngrx/store';\r\n\r\nimport { getMaskUserName, State, getAccessToken } from './state/user.reducer';\r\nimport * as UserActions from './state/user.actions'\r\nimport { User } from './user';\r\n\r\n@Component({\r\n  templateUrl: './login.component.html',\r\n  styleUrls: ['./login.component.css']\r\n})\r\nexport class LoginComponent implements OnInit {\r\n  pageTitle = 'Log In';\r\n  submitted = false;\r\n  maskUserName$: Observable<boolean>;\r\n\r\n  constructor(private store: Store<State>, private router: Router) { }\r\n\r\n  ngOnInit(): void {\r\n    this.maskUserName$ = this.store.select(getMaskUserName);\r\n  }\r\n\r\n  cancel(): void {\r\n    this.router.navigate(['welcome']);\r\n  }\r\n\r\n  checkChanged(): void {\r\n    this.store.dispatch(UserActions.maskUserName());\r\n  }\r\n\r\n  login(loginForm: NgForm): void {\r\n    this.submitted = true;\r\n    if (loginForm && loginForm.valid) {\r\n      const user: User = {\r\n        email: loginForm.form.value.userName,\r\n        password: loginForm.form.value.password,\r\n        firstname: null,\r\n        lastname: null\r\n      };      \r\n      \r\n      this.store.dispatch(UserActions.login({ user }));\r\n\r\n      this.store.select(getAccessToken).subscribe(res =>  {\r\n        if (res) {\r\n          this.router.navigate(['/products']);\r\n        }\r\n      });      \r\n    }    \r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1420,7 +1428,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class='container main-content'>\r\n\r\n    <div class=\"card\">\r\n        <div class=\"card-header\">\r\n            {{pageTitle}}\r\n        </div>\r\n\r\n        <div class=\"card-body\">\r\n            <form class=\"needs-validation\" novalidate (ngSubmit)=\"login(loginForm)\" #loginForm=\"ngForm\" autocomplete=\"off\">\r\n                <fieldset>\r\n                    <div class=\"form-group row\">\r\n                        <label class=\"col-md-2 col-form-label\" for=\"userNameId\">User Name</label>\r\n                        <div class=\"col-md-8\">\r\n                            <input type=\"email\" class=\"form-control\" [ngClass]=\"{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }\" id=\"userNameId\" [type]=\"(maskUserName$ | async) ? 'password' : 'text'\" placeholder=\"User Name (required)\" required ngModel\r\n                                name=\"userName\" #userNameVar=\"ngModel\" />\r\n                            <div class=\"invalid-feedback\" *ngIf=\"(userNameVar.touched || userNameVar.dirty) && passwordVar.hasError('required')\">\r\n                                User name is required.\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"form-group row\">\r\n                        <label class=\"col-md-2 col-form-label\" for=\"passwordId\">Password</label>\r\n                        <div class=\"col-md-8\">\r\n                            <input class=\"form-control\" [ngClass]=\"{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }\" id=\"passwordId\" type=\"password\" placeholder=\"Password (required)\" required ngModel name=\"password\" #passwordVar=\"ngModel\" />\r\n                            <div class=\"invalid-feedback\" *ngIf=\"(passwordVar.touched || passwordVar.dirty) && passwordVar.hasError('required')\">\r\n                                Password is required.\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"form-group\">\r\n                        <div class=\"col-md-4 col-md-offset-2\">\r\n                            <span>\r\n                <button class=\"btn btn-primary\"\r\n                        type=\"submit\"\r\n                        style=\"width:80px;margin-right:10px\"\r\n                        [disabled]=\"!loginForm.valid\">\r\n                  Log In\r\n                </button>\r\n              </span>\r\n                            <span>\r\n                <a class=\"btn btn-light\"\r\n                   (click)=\"cancel()\">\r\n                  Cancel\r\n                </a>\r\n              </span>\r\n                        </div>\r\n                    </div>\r\n                </fieldset>\r\n            </form>\r\n        </div>\r\n\r\n        <div class=\"card-footer\">\r\n            <div class=\"row\">\r\n                <div class=\"form-check col-md-7\">\r\n                    <label>\r\n            <input class=\"form-check-input\"\r\n                   type=\"checkbox\"\r\n                   (change)=\"checkChanged()\"\r\n                   [checked]=\"maskUserName$ | async\">\r\n            Mask user name\r\n          </label>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <p>\r\n        Don't have an account? Register <a routerLink=\"../register\">here</a>\r\n    </p>\r\n</div>"
+            "templateData": "<div class='container main-content'>\r\n\r\n    <div class=\"card\">\r\n        <div class=\"card-header\">\r\n            {{pageTitle}}\r\n        </div>\r\n\r\n        <div class=\"card-body\">\r\n            <form class=\"needs-validation\" novalidate (ngSubmit)=\"login(loginForm)\" #loginForm=\"ngForm\" autocomplete=\"off\">\r\n                <fieldset>\r\n                    <div class=\"form-group row\">\r\n                        <label class=\"col-md-2 col-form-label\" for=\"userNameId\">User Name</label>\r\n                        <div class=\"col-md-8\">\r\n                            <input type=\"email\" class=\"form-control\" [ngClass]=\"{'is-invalid': ( submitted && !userNameVar.valid ) || (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }\" id=\"userNameId\" [type]=\"(maskUserName$ | async) ? 'password' : 'text'\" placeholder=\"User Name (required)\"\r\n                                required ngModel name=\"userName\" #userNameVar=\"ngModel\" />\r\n                            <div class=\"invalid-feedback\" *ngIf=\"( submitted && !userNameVar.valid ) || (userNameVar.touched || userNameVar.dirty) && userNameVar.hasError('required')\">\r\n                                User name is required.\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"form-group row\">\r\n                        <label class=\"col-md-2 col-form-label\" for=\"passwordId\">Password</label>\r\n                        <div class=\"col-md-8\">\r\n                            <input class=\"form-control\" [ngClass]=\"{'is-invalid': ( submitted && !passwordVar.valid ) || (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }\" id=\"passwordId\" type=\"password\" placeholder=\"Password (required)\" required ngModel name=\"password\"\r\n                                #passwordVar=\"ngModel\" />\r\n                            <div class=\"invalid-feedback\" *ngIf=\"( submitted && !passwordVar.valid ) || (passwordVar.touched || passwordVar.dirty) && passwordVar.hasError('required')\">\r\n                                Password is required.\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"form-group\">\r\n                        <div class=\"col-md-4 col-md-offset-2\">\r\n                            <span>\r\n                <button class=\"btn btn-primary\"\r\n                        type=\"submit\"\r\n                        style=\"width:80px;margin-right:10px\"\r\n                        [disabled]=\"!loginForm.valid\">\r\n                  Log In\r\n                </button>\r\n              </span>\r\n                            <span>\r\n                <a class=\"btn btn-light\"\r\n                   (click)=\"cancel()\">\r\n                  Cancel\r\n                </a>\r\n              </span>\r\n                        </div>\r\n                    </div>\r\n                </fieldset>\r\n            </form>\r\n        </div>\r\n\r\n        <div class=\"card-footer\">\r\n            <div class=\"row\">\r\n                <div class=\"form-check col-md-7\">\r\n                    <label>\r\n            <input class=\"form-check-input\"\r\n                   type=\"checkbox\"\r\n                   (change)=\"checkChanged()\"\r\n                   [checked]=\"maskUserName$ | async\">\r\n            Mask user name\r\n          </label>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <p>\r\n        Don't have an account? Register <a routerLink=\"../register\">here</a>\r\n    </p>\r\n</div>"
         },
         {
             "name": "MenuComponent",
@@ -3002,9 +3010,25 @@
                 "name": "login",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/login.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "login",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/app/user/state/user.actions.ts",
                 "type": "",
                 "defaultValue": "createAction('[Auth] Login', props<{ user: User }>())"
+            },
+            {
+                "name": "loginError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/login.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "loginFailure",
@@ -3055,12 +3079,44 @@
                 "defaultValue": "createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n)"
             },
             {
+                "name": "products",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-shell.stories.ts",
+                "type": "Product[]",
+                "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
+            },
+            {
+                "name": "productShell",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-shell.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "register",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/register.user.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "register",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/app/user/register/store/register-actions.ts",
                 "type": "",
                 "defaultValue": "createAction('[Auth] Register', props<{ user: User }>())"
+            },
+            {
+                "name": "RegisterError",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/register.user.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "registerFailure",
@@ -3146,9 +3202,33 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/login.stories.ts",
+                "type": "Story<LoginComponent>",
+                "defaultValue": "(args: LoginComponent) => ({\r\n  component: LoginComponent,\r\n  props: args\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Page.stories.ts",
                 "type": "Story<Page>",
                 "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-shell.stories.ts",
+                "type": "Story<ProductShellComponent>",
+                "defaultValue": "(args: ProductShellComponent) => ({\r\n  component: ProductShellComponent,\r\n  props: { args, products$: of(products) }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/register.user.stories.ts",
+                "type": "Story<RegisterUserComponent>",
+                "defaultValue": "(args: RegisterUserComponent) => ({\r\n  component: RegisterUserComponent,\r\n  props: args\r\n})"
             },
             {
                 "name": "toggleProductCode",
@@ -3705,6 +3785,84 @@
                     "file": "src/stories/Page.stories.ts",
                     "type": "Story<Page>",
                     "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                }
+            ],
+            "src/stories/login.stories.ts": [
+                {
+                    "name": "login",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/login.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "loginError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/login.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/login.stories.ts",
+                    "type": "Story<LoginComponent>",
+                    "defaultValue": "(args: LoginComponent) => ({\r\n  component: LoginComponent,\r\n  props: args\r\n})"
+                }
+            ],
+            "src/stories/product-shell.stories.ts": [
+                {
+                    "name": "products",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-shell.stories.ts",
+                    "type": "Product[]",
+                    "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
+                },
+                {
+                    "name": "productShell",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-shell.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-shell.stories.ts",
+                    "type": "Story<ProductShellComponent>",
+                    "defaultValue": "(args: ProductShellComponent) => ({\r\n  component: ProductShellComponent,\r\n  props: { args, products$: of(products) }\r\n})"
+                }
+            ],
+            "src/stories/register.user.stories.ts": [
+                {
+                    "name": "register",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/register.user.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "RegisterError",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/register.user.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/register.user.stories.ts",
+                    "type": "Story<RegisterUserComponent>",
+                    "defaultValue": "(args: RegisterUserComponent) => ({\r\n  component: RegisterUserComponent,\r\n  props: args\r\n})"
                 }
             ],
             "src/app/user/register/store/register-actions.ts": [
@@ -4301,7 +4459,7 @@
                 "linktype": "component",
                 "name": "LoginComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/8",
+                "coverageCount": "0/9",
                 "status": "low"
             },
             {
@@ -4765,12 +4923,102 @@
                 "status": "low"
             },
             {
+                "filePath": "src/stories/login.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "login",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/login.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "loginError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/login.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/stories/page.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "PageComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "products",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "productShell",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/register.user.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "register",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/register.user.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "RegisterError",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/register.user.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             }
         ]
