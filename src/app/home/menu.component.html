@@ -22,7 +22,7 @@
         </ul>
         <div class="custom-control custom-switch">
             <input type="checkbox" class="custom-control-input" id="themeSwitch" [checked]="isChecked" alue="1" (change)="toggleTheme($event)">
-            <label class="custom-control-label" for="themeSwitch">{{activeTheme.name}}</label>
+            <label class="custom-control-label" for="themeSwitch">{{activeTheme?.name}}</label>
         </div>
     </div>
 </nav>

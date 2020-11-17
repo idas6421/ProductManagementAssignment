@@ -24,9 +24,9 @@ const initialState: ProductState = {
 
 const getProductFeatureState = createFeatureSelector<ProductState>('products');
 
-export const getShowProductCode = createSelector(getProductFeatureState, state => state.showProductCode);
+export const getShowProductCode = createSelector(getProductFeatureState, state => state?.showProductCode);
 
-export const getCurrentProductId = createSelector(getProductFeatureState, state => state.currentProductId);
+export const getCurrentProductId = createSelector(getProductFeatureState, state => state?.currentProductId);
 
 export const getCurrentProduct = createSelector(
     getProductFeatureState,
@@ -46,16 +46,16 @@ export const getCurrentProduct = createSelector(
     }
 );
 
-export const getProducts = createSelector(getProductFeatureState, state => state.products);
+export const getProducts = createSelector(getProductFeatureState, state => state?.products);
 
-export const getError = createSelector(getProductFeatureState, state => state.error);
+export const getError = createSelector(getProductFeatureState, state => state?.error);
 
 export const productReducer = createReducer<ProductState>(
     initialState,
     on(ProductActions.toggleProductCode, (state): ProductState => {
         return {
             ...state,
-            showProductCode: !state.showProductCode
+            showProductCode: !state?.showProductCode
         };
     }),
     on(ProductActions.setCurrentProduct, (state, action): ProductState => {

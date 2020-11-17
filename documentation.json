@@ -1937,7 +1937,7 @@
         },
         {
             "name": "ProductListComponent",
-            "id": "component-ProductListComponent-fa4a408ff710c10ffe85b3e029e58adb",
+            "id": "component-ProductListComponent-09bb44bb0be8b338baca5b722a480403",
             "file": "src/app/products/product-list/product-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2060,7 +2060,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { Store } from '@ngrx/store';\r\n\r\nimport { Product } from '../product';\r\nimport { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../state/product.reducer';\r\nimport * as ProductActions from '../state/product.action';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'pm-product-list',\r\n  templateUrl: './product-list.component.html',\r\n  styleUrls: ['./product-list.component.css']\r\n})\r\nexport class ProductListComponent implements OnInit {\r\n  errorMessage$: Observable<string>;\r\n  displayCode$: Observable<boolean>;\r\n  selectedProduct$: Observable<Product>;\r\n  pageTitle = 'Products';\r\n\r\n  displayCode: boolean;\r\n\r\n  // Used to highlight the selected product in the list\r\n  selectedProduct: Product | null;\r\n  products$: Observable<Product[]>;\r\n  \r\n  constructor(private store:Store<State>) { }\r\n\r\n  ngOnInit(): void {\r\n    this.products$ = this.store.select(getProducts);\r\n\r\n    this.errorMessage$ = this.store.select(getError);\r\n\r\n    this.store.dispatch(ProductActions.loadProducts());\r\n\r\n    this.selectedProduct$ = this.store.select(getCurrentProduct);\r\n\r\n    this.displayCode$ = this.store.select(getShowProductCode);\r\n  }\r\n\r\n  checkChanged(): void {\r\n    this.store.dispatch(ProductActions.toggleProductCode());\r\n  }\r\n\r\n  newProduct(): void {\r\n    this.store.dispatch(ProductActions.initializeCurrentProduct());\r\n  }\r\n\r\n  productSelected(product: Product): void {\r\n    this.store.dispatch(ProductActions.setCurrentProduct(\r\n      { currentProductId: product.id }\r\n    ));\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { Store } from '@ngrx/store';\r\n\r\nimport { Product } from '../product';\r\nimport { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../state/product.reducer';\r\nimport * as ProductActions from '../state/product.action';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'pm-product-list',\r\n  templateUrl: './product-list.component.html',\r\n  styleUrls: ['./product-list.component.css']\r\n})\r\nexport class ProductListComponent implements OnInit {\r\n  errorMessage$: Observable<string>;\r\n  displayCode$: Observable<boolean>;\r\n  selectedProduct$: Observable<Product>;\r\n  pageTitle = 'Products';\r\n\r\n  displayCode: boolean;\r\n\r\n  // Used to highlight the selected product in the list\r\n  selectedProduct: Product | null;\r\n  products$: Observable<Product[]>;\r\n  \r\n  constructor(private store:Store<State>) { }\r\n\r\n  ngOnInit(): void {\r\n    this.store.dispatch(ProductActions.loadProducts());\r\n\r\n    this.products$ = this.store.select(getProducts);\r\n\r\n    this.errorMessage$ = this.store.select(getError);\r\n\r\n    this.selectedProduct$ = this.store.select(getCurrentProduct);\r\n\r\n    this.displayCode$ = this.store.select(getShowProductCode);\r\n  }\r\n\r\n  checkChanged(): void {\r\n    this.store.dispatch(ProductActions.toggleProductCode());\r\n  }\r\n\r\n  newProduct(): void {\r\n    this.store.dispatch(ProductActions.initializeCurrentProduct());\r\n  }\r\n\r\n  productSelected(product: Product): void {\r\n    this.store.dispatch(ProductActions.setCurrentProduct(\r\n      { currentProductId: product.id }\r\n    ));\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2735,6 +2735,14 @@
                 "defaultValue": "{\r\n    name: 'Green',\r\n    properties: {\r\n        \"--background-btn\": \"#0BB783\",\r\n        \"--border-btn\": \"#0BB783\",\r\n        \"--background-btn-active\": \"#04AA77\",\r\n        \"--border-btn-active\": \"#04AA77\",\r\n        \"--background-btn-hover\": \"#04AA77\",\r\n        \"--border-btn-hover\": \"#04AA77\",\r\n        \"--background-btn-focus\": \"#04AA77\",\r\n        \"--border-btn-focus\": \"#04AA77\",\r\n        \"--color-btn-focus\": \"#fff\",\r\n        \"--box-shadow-btn-focus\": \"0 0 0 0.2rem rgba(4, 170, 119, 0.5)\",\r\n        \"--background-btn-disabled\": \"#0BB783\",\r\n        \"--border-btn-disabled\": \"#0BB783\",\r\n        \"--color-btn-disabled\": \"#fff\",\r\n        /*btn-light*/\r\n        \"--background-btn-light\": \"#f8f9fa\",\r\n        \"--border-btn-light\": \"#f8f9fa\",\r\n        \"--color-btn-light\": \"#212529\",\r\n        \"--background-btn-light-hover\": \"#e2e6ea\",\r\n        \"--border-btn-light-hover\": \"#dae0e5\",\r\n        \"--color-btn-light-hover\": \"#212529\",\r\n        \"--background-btn-light-active\": \"#e2e6ea\",\r\n        \"--border-btn-light-active\": \"#d3d9df\",\r\n        \"--color-btn-light-active\": \"#212529\",\r\n        \"--background-btn-light-focus\": \"#e2e6ea\",\r\n        \"--border-btn-light-focus\": \"#d3d9df\",\r\n        \"--color-btn-light-focus\": \"#212529\",\r\n        \"--box-shadow-btn-light-focus\": \"0 0 0 0.2rem rgba(216, 217, 219, 0.5)\",\r\n        /*list-group-item*/\r\n        \"--background-list-group-item\": \"#fff\",\r\n        \"--border-list-group-item\": \"1px solid rgba(0, 0, 0, 0.125)\",\r\n        \"--background-list-group-item-hover\": \"#f8f9fa\",\r\n        \"--color-list-group-item-hover\": \"#495057\",\r\n        \"--background-list-group-item-active\": \"#e9ecef\",\r\n        \"--color-list-group-item-active\": \"#212529\",\r\n        \"--background-list-group-item-css-active\": \"#0BB783\",\r\n        \"--border-list-group-item-css-active\": \"#0BB783\",\r\n        /*card-header*/\r\n        \"--background-card-header\": \"rgba(204, 238, 242, 1)\",\r\n        \"--border-card-header\": \"1px solid rgba(0, 0, 0, 0.125)\",\r\n        /*bg-light*/\r\n        \"--background-bg-light\": \"#0BB783\",\r\n        /*navbar*/\r\n        \"--color-navbar-brand\": \"#fff\"   \r\n    }\r\n}"
             },
             {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/app.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "deleteProduct",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -3063,10 +3071,42 @@
                 "defaultValue": "createAction(\r\n  '[User] Mask User Name'\r\n)"
             },
             {
+                "name": "menu",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/menu.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "PageNotFound",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/page-not-found.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Primary",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "productEdit",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-edit.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "productList",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-list.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -3082,7 +3122,23 @@
                 "name": "products",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/product-edit.stories.ts",
+                "type": "Product[]",
+                "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
+            },
+            {
+                "name": "products",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/product-shell.stories.ts",
+                "type": "Product[]",
+                "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
+            },
+            {
+                "name": "products",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-list.stories.ts",
                 "type": "Product[]",
                 "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
             },
@@ -3175,12 +3231,28 @@
                 "defaultValue": "createAction('[Theme] Set Current Theme', props<{ theme: Theme }>())"
             },
             {
+                "name": "shell",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/shell.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "Small",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Button.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/app.stories.ts",
+                "type": "Story<AppComponent>",
+                "defaultValue": "(args: AppComponent) => ({\r\n    component: AppComponent,\r\n    templateUrl: '../app/app.component.html',\r\n    styleUrls: ['../app/app.component.css'],\r\n    moduleMetadata: {\r\n        declarations: [\r\n            AppComponent\r\n        ],\r\n        imports: [\r\n            CommonModule,\r\n            BrowserModule,\r\n            AppRoutingModule,\r\n            FormsModule,\r\n            ReactiveFormsModule,\r\n            HttpClientModule,\r\n            RouterModule.forRoot([], { useHash: true }),\r\n            StoreModule.forRoot({\r\n                'users': userReducer, \r\n                'register': registerReducer, \r\n                'products': productReducer \r\n            }),\r\n            EffectsModule.forRoot([\r\n                UserEffects, \r\n                RegisterEffects, \r\n                ProductEffects\r\n            ]),\r\n            BrowserAnimationsModule\r\n        ],\r\n        providers: [\r\n            { provide: APP_BASE_HREF, useValue: '/' },\r\n            ThemeService\r\n        ],\r\n        schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n    },\r\n    props: { args },\r\n})"
             },
             {
                 "name": "Template",
@@ -3210,6 +3282,30 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/page-not-found.stories.ts",
+                "type": "Story<PageNotFoundComponent>",
+                "defaultValue": "(args: PageNotFoundComponent) => ({\r\n  component: PageNotFoundComponent,\r\n  props: args\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/menu.stories.ts",
+                "type": "Story<MenuComponent>",
+                "defaultValue": "(args: MenuComponent) => ({\r\n  component: MenuComponent,\r\n  props: args\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-edit.stories.ts",
+                "type": "Story<ProductEditComponent>",
+                "defaultValue": "(args: ProductEditComponent) => ({\r\n  component: ProductEditComponent,\r\n  props: { args, product$: of(products[0]) }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Page.stories.ts",
                 "type": "Story<Page>",
                 "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
@@ -3226,9 +3322,33 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/product-list.stories.ts",
+                "type": "Story<ProductListComponent>",
+                "defaultValue": "(args: ProductListComponent) => ({\r\n  component: ProductListComponent,\r\n  props: { args, products$: of(products) }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/shell.stories.ts",
+                "type": "Story<ShellComponent>",
+                "defaultValue": "(args: ShellComponent) => ({\r\n  component: ShellComponent,\r\n  props: args\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/register.user.stories.ts",
                 "type": "Story<RegisterUserComponent>",
                 "defaultValue": "(args: RegisterUserComponent) => ({\r\n  component: RegisterUserComponent,\r\n  props: args\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/welcome.stories.ts",
+                "type": "Story<WelcomeComponent>",
+                "defaultValue": "(args: WelcomeComponent) => ({\r\n  component: WelcomeComponent,\r\n  props: args\r\n})"
             },
             {
                 "name": "toggleProductCode",
@@ -3269,6 +3389,14 @@
                 "file": "src/app/user/state/user.reducer.ts",
                 "type": "",
                 "defaultValue": "createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n)"
+            },
+            {
+                "name": "welcome",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/welcome.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             }
         ],
         "functions": [],
@@ -3429,6 +3557,24 @@
                     "file": "src/app/products/state/product.action.ts",
                     "type": "",
                     "defaultValue": "createAction(\r\n    '[Product] Update Product Success',\r\n    props<{ product: Product }>()\r\n)"
+                }
+            ],
+            "src/stories/app.stories.ts": [
+                {
+                    "name": "Default",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/app.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/app.stories.ts",
+                    "type": "Story<AppComponent>",
+                    "defaultValue": "(args: AppComponent) => ({\r\n    component: AppComponent,\r\n    templateUrl: '../app/app.component.html',\r\n    styleUrls: ['../app/app.component.css'],\r\n    moduleMetadata: {\r\n        declarations: [\r\n            AppComponent\r\n        ],\r\n        imports: [\r\n            CommonModule,\r\n            BrowserModule,\r\n            AppRoutingModule,\r\n            FormsModule,\r\n            ReactiveFormsModule,\r\n            HttpClientModule,\r\n            RouterModule.forRoot([], { useHash: true }),\r\n            StoreModule.forRoot({\r\n                'users': userReducer, \r\n                'register': registerReducer, \r\n                'products': productReducer \r\n            }),\r\n            EffectsModule.forRoot([\r\n                UserEffects, \r\n                RegisterEffects, \r\n                ProductEffects\r\n            ]),\r\n            BrowserAnimationsModule\r\n        ],\r\n        providers: [\r\n            { provide: APP_BASE_HREF, useValue: '/' },\r\n            ThemeService\r\n        ],\r\n        schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n    },\r\n    props: { args },\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -3813,6 +3959,94 @@
                     "defaultValue": "(args: LoginComponent) => ({\r\n  component: LoginComponent,\r\n  props: args\r\n})"
                 }
             ],
+            "src/stories/menu.stories.ts": [
+                {
+                    "name": "menu",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/menu.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/menu.stories.ts",
+                    "type": "Story<MenuComponent>",
+                    "defaultValue": "(args: MenuComponent) => ({\r\n  component: MenuComponent,\r\n  props: args\r\n})"
+                }
+            ],
+            "src/stories/page-not-found.stories.ts": [
+                {
+                    "name": "PageNotFound",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/page-not-found.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/page-not-found.stories.ts",
+                    "type": "Story<PageNotFoundComponent>",
+                    "defaultValue": "(args: PageNotFoundComponent) => ({\r\n  component: PageNotFoundComponent,\r\n  props: args\r\n})"
+                }
+            ],
+            "src/stories/product-edit.stories.ts": [
+                {
+                    "name": "productEdit",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-edit.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "products",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-edit.stories.ts",
+                    "type": "Product[]",
+                    "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-edit.stories.ts",
+                    "type": "Story<ProductEditComponent>",
+                    "defaultValue": "(args: ProductEditComponent) => ({\r\n  component: ProductEditComponent,\r\n  props: { args, product$: of(products[0]) }\r\n})"
+                }
+            ],
+            "src/stories/product-list.stories.ts": [
+                {
+                    "name": "productList",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-list.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "products",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-list.stories.ts",
+                    "type": "Product[]",
+                    "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/product-list.stories.ts",
+                    "type": "Story<ProductListComponent>",
+                    "defaultValue": "(args: ProductListComponent) => ({\r\n  component: ProductListComponent,\r\n  props: { args, products$: of(products) }\r\n})"
+                }
+            ],
             "src/stories/product-shell.stories.ts": [
                 {
                     "name": "products",
@@ -3889,6 +4123,42 @@
                     "file": "src/app/user/register/store/register-actions.ts",
                     "type": "",
                     "defaultValue": "createAction('[Auth] Register Success', props<{accessToken}>())"
+                }
+            ],
+            "src/stories/shell.stories.ts": [
+                {
+                    "name": "shell",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/shell.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/shell.stories.ts",
+                    "type": "Story<ShellComponent>",
+                    "defaultValue": "(args: ShellComponent) => ({\r\n  component: ShellComponent,\r\n  props: args\r\n})"
+                }
+            ],
+            "src/stories/welcome.stories.ts": [
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/welcome.stories.ts",
+                    "type": "Story<WelcomeComponent>",
+                    "defaultValue": "(args: WelcomeComponent) => ({\r\n  component: WelcomeComponent,\r\n  props: args\r\n})"
+                },
+                {
+                    "name": "welcome",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/welcome.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
                 }
             ]
         },
@@ -4905,6 +5175,26 @@
                 "status": "low"
             },
             {
+                "filePath": "src/stories/app.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Default",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/app.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/stories/button.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -4953,12 +5243,112 @@
                 "status": "low"
             },
             {
+                "filePath": "src/stories/menu.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "menu",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/menu.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/page-not-found.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "PageNotFound",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/page-not-found.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/stories/page.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "PageComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-edit.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "productEdit",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-edit.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "products",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-edit.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-list.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "productList",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-list.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "products",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/product-list.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
@@ -5017,6 +5407,46 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "shell",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/shell.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/welcome.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/welcome.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "welcome",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

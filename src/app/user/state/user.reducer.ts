@@ -43,7 +43,7 @@ export const getMaskUserName = createSelector(
 export const getCurrentUser = createSelector(
   getUserFeatureState,
   state => {
-    return state.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null
+    return state?.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null
   }
 );
 
@@ -53,11 +53,11 @@ export const getAccessToken = createSelector(
 );
 
 export const getUserLoggedInState = createSelector(
-  getUserFeatureState, (state): boolean => state.isAuthenticated
+  getUserFeatureState, (state): boolean => state?.isAuthenticated
 );
 
 export const getCurrentTheme = createSelector(
-  getUserFeatureState, (state): Theme => state.theme
+  getUserFeatureState, (state): Theme => state?.theme
 );
 
 export const userReducer = createReducer<UserState>(
@@ -65,7 +65,7 @@ export const userReducer = createReducer<UserState>(
   on(UserActions.maskUserName, (state): UserState => {
     return {
       ...state,
-      maskUserName: !state.maskUserName
+      maskUserName: !state?.maskUserName
     };
   }),
   on(UserActions.login, (state, action): UserState => {

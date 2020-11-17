@@ -17,9 +17,9 @@ import { Observable } from 'rxjs';
 })
 export class ProductEditComponent implements OnInit {
   isUserLoggedIn$: Observable<boolean>;
-  product$: Observable<Product | null>;
   pageTitle = 'Product Edit';
-  
+  product: Product;
+
   errorMessage = '';
   productForm: FormGroup;
 
@@ -27,7 +27,7 @@ export class ProductEditComponent implements OnInit {
   displayMessage: { [key: string]: string } = {};
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
-
+  
   constructor(private store: Store<State>, private fb: FormBuilder) {
 
     // Defines all of the validation messages for the form.
@@ -61,9 +61,12 @@ export class ProductEditComponent implements OnInit {
     });
 
     // Watch for changes to the currently selected product
-    this.product$ = this.store.select(getCurrentProduct).pipe(tap(
-      currentProduct => this.displayProduct(currentProduct)
-    ));
+    this.store.select(getCurrentProduct).subscribe(currentProduct=> {
+      if(currentProduct) {
+         this.displayProduct(currentProduct);
+         this.product = currentProduct;
+      }
+    });
 
     // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(

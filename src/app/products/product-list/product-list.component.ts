@@ -21,14 +21,18 @@ export class ProductListComponent implements OnInit {
 
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
-  products$: Observable<Product[]>;
+  products: Product[] = [];
   
   constructor(private store:Store<State>) { }
 
   ngOnInit(): void {
     this.store.dispatch(ProductActions.loadProducts());
 
-    this.products$ = this.store.select(getProducts);
+    this.store.select(getProducts).subscribe(res=>{
+      if(res) {
+        this.products = res;
+      }
+    });
 
     this.errorMessage$ = this.store.select(getError);
 

@@ -1,13 +1,8 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { provideMockStore } from '@ngrx/store/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { ReactiveFormsModule } from '@angular/forms';
 import { moduleMetadata } from '@storybook/angular';
-import { ProductEditComponent } from '../app/products/product-edit/product-edit.component';
 import { CommonModule } from '@angular/common';
-import { productReducer } from '../app/products/state/product.reducer';
 import { of } from 'rxjs';
 import { Product } from '../app/products/product';
 import { ProductListComponent } from '../app/products/product-list/product-list.component';
@@ -64,8 +59,10 @@ export default {
       moduleMetadata({
         imports: [
             CommonModule,
-            StoreModule.forRoot({ productReducer }, {}),
             ReactiveFormsModule
+        ],
+        providers: [
+          provideMockStore()
         ]
     })
   ]
@@ -73,12 +70,12 @@ export default {
 
 const Template: Story<ProductListComponent> = (args: ProductListComponent) => ({
   component: ProductListComponent,
-  props: { args, products$: of(products) }
+  props: { args, products: products }
 });
 
 export const productList = Template.bind({});
 
 productList.args = {
-    products$: of(products)
+    products: products
 }
 
