@@ -1,14 +1,10 @@
 import * as UserReducer from './user.reducer';
 import * as UserActions from './user.actions'; 
-import { User } from '../user';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { MockStore } from '@ngrx/store/testing';
 import { MemoizedSelector } from '@ngrx/store';
-import { TestBed } from '@angular/core/testing';
 import { base } from '../../theme/theme';
 
 describe('user-reducer', () => {   
-    let mockStore: MockStore;
-    let mockGetMaskUserName: MemoizedSelector<UserReducer.UserState, boolean>;
     let state: UserReducer.UserState = null;
     beforeEach(() => {
         state = {
@@ -47,9 +43,10 @@ describe('user-reducer', () => {
 
     it('should return current logged in user', () => {        
         expect(UserReducer.getCurrentUser.projector(state).email).toBe(state.currentUser.email);
-        const _state: UserReducer.UserState =  {...state };
+        let _state: UserReducer.UserState =  {...state };
         _state.currentUser = null;
-        expect(UserReducer.getCurrentUser.projector(_state)).toBe(null);
+        expect(UserReducer.getCurrentUser.projector(_state)).toBeNull();
+        expect(UserReducer.getCurrentUser.projector(null)).toBeNull();
     });
 
     it('should return access token', () => {        
@@ -58,16 +55,20 @@ describe('user-reducer', () => {
 
     it('should return current logged-in user state', () => {        
         expect(UserReducer.getUserLoggedInState.projector(state)).toBe(state.isAuthenticated);
+        expect(UserReducer.getUserLoggedInState.projector(null)).toBeUndefined();
     });
 
     it('should active theme', () => {        
         expect(UserReducer.getCurrentTheme.projector(state)).toBe(state.theme);
+        expect(UserReducer.getCurrentTheme.projector(null)).toBeUndefined();
     });
 
     it('should mask user name', () => {
         const createAction = UserActions.maskUserName();
-        const result = UserReducer.userReducer(state, createAction);    
+        let result = UserReducer.userReducer(state, createAction);    
         expect(result.maskUserName).toEqual(true);
+        result = UserReducer.userReducer(null, createAction);
+        expect(result.maskUserName).toBe(result.maskUserName);
     });
 
     it('should login with user provided details', () => {

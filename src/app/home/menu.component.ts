@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { UserState, getCurrentUser, getCurrentTheme } from '../user/state/user.reducer';
 import * as UserActions from '../user/state/user.actions';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { User } from '../user/user';
 import { ThemeService } from '../theme/theme.service';
 import { Theme, dark, base } from '../theme/theme';

@@ -3,10 +3,8 @@ import { LoginComponent } from './login.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MemoizedSelector } from '@ngrx/store';
 import * as LoginReducer from './state/user.reducer';
-import * as LoginActions from './state/user.actions';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm, FormGroup, FormControl } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 
 
@@ -16,7 +14,6 @@ describe('LoginComponent', () => {
   let mockStore: MockStore;
   let mockGetMaskUserNameSelector: MemoizedSelector<LoginReducer.UserState, boolean>;
   let mockGetAccessTokenSelector: MemoizedSelector<LoginReducer.UserState, string>;
-  const { location } = window;
   
   beforeAll((): void => {
       delete window.location;
