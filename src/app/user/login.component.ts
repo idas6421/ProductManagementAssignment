@@ -16,7 +16,7 @@ import { User } from './user';
 })
 export class LoginComponent implements OnInit {
   pageTitle = 'Log In';
-
+  submitted = false;
   maskUserName$: Observable<boolean>;
 
   constructor(private store: Store<State>, private router: Router) { }
@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(loginForm: NgForm): void {
+    this.submitted = true;
     if (loginForm && loginForm.valid) {
       const user: User = {
         email: loginForm.form.value.userName,

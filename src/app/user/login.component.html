@@ -11,9 +11,9 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for="userNameId">User Name</label>
                         <div class="col-md-8">
-                            <input type="email" class="form-control" [ngClass]="{'is-invalid': (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }" id="userNameId" [type]="(maskUserName$ | async) ? 'password' : 'text'" placeholder="User Name (required)" required ngModel
-                                name="userName" #userNameVar="ngModel" />
-                            <div class="invalid-feedback" *ngIf="(userNameVar.touched || userNameVar.dirty) && passwordVar.hasError('required')">
+                            <input type="email" class="form-control" [ngClass]="{'is-invalid': ( submitted && !userNameVar.valid ) || (userNameVar.touched || userNameVar.dirty) && !userNameVar.valid }" id="userNameId" [type]="(maskUserName$ | async) ? 'password' : 'text'" placeholder="User Name (required)"
+                                required ngModel name="userName" #userNameVar="ngModel" />
+                            <div class="invalid-feedback" *ngIf="( submitted && !userNameVar.valid ) || (userNameVar.touched || userNameVar.dirty) && userNameVar.hasError('required')">
                                 User name is required.
                             </div>
                         </div>
@@ -22,8 +22,9 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label" for="passwordId">Password</label>
                         <div class="col-md-8">
-                            <input class="form-control" [ngClass]="{'is-invalid': (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }" id="passwordId" type="password" placeholder="Password (required)" required ngModel name="password" #passwordVar="ngModel" />
-                            <div class="invalid-feedback" *ngIf="(passwordVar.touched || passwordVar.dirty) && passwordVar.hasError('required')">
+                            <input class="form-control" [ngClass]="{'is-invalid': ( submitted && !passwordVar.valid ) || (passwordVar.touched || passwordVar.dirty) && !passwordVar.valid }" id="passwordId" type="password" placeholder="Password (required)" required ngModel name="password"
+                                #passwordVar="ngModel" />
+                            <div class="invalid-feedback" *ngIf="( submitted && !passwordVar.valid ) || (passwordVar.touched || passwordVar.dirty) && passwordVar.hasError('required')">
                                 Password is required.
                             </div>
                         </div>
