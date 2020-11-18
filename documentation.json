@@ -50,10 +50,10 @@
         },
         {
             "name": "ProductState",
-            "id": "interface-ProductState-507405a1c24054f57509eb7a1e109d01",
+            "id": "interface-ProductState-50ea5e701735bab47ae4f20d51e52aa0",
             "file": "src/app/products/state/product.reducer.ts",
             "type": "interface",
-            "sourceCode": "import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport { Product } from '../product';\r\nimport * as AppState from '../../state/app.state';\r\n\r\nimport * as ProductActions from './product.action';\r\n\r\nexport interface State extends AppState.State {\r\n    products: ProductState;\r\n}\r\n\r\nexport interface ProductState {\r\n    showProductCode: boolean;\r\n    currentProductId: number;\r\n    products: Product[];\r\n    error: string;\r\n}\r\n\r\nconst initialState: ProductState = {\r\n    showProductCode: true,\r\n    currentProductId: null,\r\n    products: [],\r\n    error: ''\r\n}\r\n\r\nconst getProductFeatureState = createFeatureSelector<ProductState>('products');\r\n\r\nexport const getShowProductCode = createSelector(getProductFeatureState, state => state.showProductCode);\r\n\r\nexport const getCurrentProductId = createSelector(getProductFeatureState, state => state.currentProductId);\r\n\r\nexport const getCurrentProduct = createSelector(\r\n    getProductFeatureState,\r\n    getCurrentProductId,\r\n    (state, currentProductId) => {\r\n        if(currentProductId === 0) {\r\n            return {\r\n                id: 0,\r\n                productName: '',\r\n                productCode: 'New',\r\n                description: '',\r\n                starRating: 0\r\n            }\r\n        } else {\r\n            return currentProductId ? state.products.find(f=> f.id === currentProductId) : null;\r\n        }\r\n    }\r\n);\r\n\r\nexport const getProducts = createSelector(getProductFeatureState, state => state.products);\r\n\r\nexport const getError = createSelector(getProductFeatureState, state => state.error);\r\n\r\nexport const productReducer = createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n);",
+            "sourceCode": "import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport { Product } from '../product';\r\nimport * as AppState from '../../state/app.state';\r\n\r\nimport * as ProductActions from './product.action';\r\n\r\nexport interface State extends AppState.State {\r\n    products: ProductState;\r\n}\r\n\r\nexport interface ProductState {\r\n    showProductCode: boolean;\r\n    currentProductId: number;\r\n    products: Product[];\r\n    error: string;\r\n}\r\n\r\nconst initialState: ProductState = {\r\n    showProductCode: true,\r\n    currentProductId: null,\r\n    products: [],\r\n    error: ''\r\n}\r\n\r\nconst getProductFeatureState = createFeatureSelector<ProductState>('products');\r\n\r\nexport const getShowProductCode = createSelector(getProductFeatureState, state => state?.showProductCode);\r\n\r\nexport const getCurrentProductId = createSelector(getProductFeatureState, state => state?.currentProductId);\r\n\r\nexport const getCurrentProduct = createSelector(\r\n    getProductFeatureState,\r\n    getCurrentProductId,\r\n    (state, currentProductId) => {\r\n        if(currentProductId === 0) {\r\n            return {\r\n                id: 0,\r\n                productName: '',\r\n                productCode: 'New',\r\n                description: '',\r\n                starRating: 0\r\n            }\r\n        } else {\r\n            return currentProductId ? state.products.find(f=> f.id === currentProductId) : null;\r\n        }\r\n    }\r\n);\r\n\r\nexport const getProducts = createSelector(getProductFeatureState, state => state?.products);\r\n\r\nexport const getError = createSelector(getProductFeatureState, state => state?.error);\r\n\r\nexport const productReducer = createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state?.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n);",
             "properties": [
                 {
                     "name": "currentProductId",
@@ -149,17 +149,17 @@
         },
         {
             "name": "State",
-            "id": "interface-State-507405a1c24054f57509eb7a1e109d01-1",
-            "file": "src/app/products/state/product.reducer.ts",
+            "id": "interface-State-99dfeb8512574a357fe260e0c18adffa-1",
+            "file": "src/app/user/state/user.reducer.ts",
             "type": "interface",
-            "sourceCode": "import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport { Product } from '../product';\r\nimport * as AppState from '../../state/app.state';\r\n\r\nimport * as ProductActions from './product.action';\r\n\r\nexport interface State extends AppState.State {\r\n    products: ProductState;\r\n}\r\n\r\nexport interface ProductState {\r\n    showProductCode: boolean;\r\n    currentProductId: number;\r\n    products: Product[];\r\n    error: string;\r\n}\r\n\r\nconst initialState: ProductState = {\r\n    showProductCode: true,\r\n    currentProductId: null,\r\n    products: [],\r\n    error: ''\r\n}\r\n\r\nconst getProductFeatureState = createFeatureSelector<ProductState>('products');\r\n\r\nexport const getShowProductCode = createSelector(getProductFeatureState, state => state.showProductCode);\r\n\r\nexport const getCurrentProductId = createSelector(getProductFeatureState, state => state.currentProductId);\r\n\r\nexport const getCurrentProduct = createSelector(\r\n    getProductFeatureState,\r\n    getCurrentProductId,\r\n    (state, currentProductId) => {\r\n        if(currentProductId === 0) {\r\n            return {\r\n                id: 0,\r\n                productName: '',\r\n                productCode: 'New',\r\n                description: '',\r\n                starRating: 0\r\n            }\r\n        } else {\r\n            return currentProductId ? state.products.find(f=> f.id === currentProductId) : null;\r\n        }\r\n    }\r\n);\r\n\r\nexport const getProducts = createSelector(getProductFeatureState, state => state.products);\r\n\r\nexport const getError = createSelector(getProductFeatureState, state => state.error);\r\n\r\nexport const productReducer = createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n);",
+            "sourceCode": "import { User } from '../user';\r\n\r\n/* NgRx */\r\nimport { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport * as UserActions from './user.actions';\r\nimport * as AppState from '../../state/app.state';\r\nimport { NullVisitor } from '@angular/compiler/src/render3/r3_ast';\r\nimport { Theme, base } from '../../theme/theme';\r\n\r\n\r\nexport interface State extends AppState.State {\r\n  users: UserState;\r\n}\r\n\r\n// State for this feature (User)\r\nexport interface UserState {\r\n  maskUserName: boolean;\r\n  isAuthenticated: boolean;\r\n  loginToken: string;\r\n  currentUser: User;\r\n  users: User[],\r\n  theme: Theme,\r\n  error: string;\r\n}\r\n\r\nconst initialState: UserState = {\r\n  maskUserName: true,\r\n  isAuthenticated: false,\r\n  loginToken: '',\r\n  error: '',\r\n  currentUser: null,\r\n  theme: base,\r\n  users: []\r\n};\r\n\r\nexport const getUserFeatureState = createFeatureSelector<UserState>('users');\r\n\r\nexport const getMaskUserName = createSelector(\r\n  getUserFeatureState,\r\n  state => state.maskUserName\r\n);\r\n\r\nexport const getCurrentUser = createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state?.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n);\r\n\r\nexport const getAccessToken = createSelector(\r\n  getUserFeatureState, \r\n  state => state.loginToken\r\n);\r\n\r\nexport const getUserLoggedInState = createSelector(\r\n  getUserFeatureState, (state): boolean => state?.isAuthenticated\r\n);\r\n\r\nexport const getCurrentTheme = createSelector(\r\n  getUserFeatureState, (state): Theme => state?.theme\r\n);\r\n\r\nexport const userReducer = createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state?.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n);",
             "properties": [
                 {
-                    "name": "products",
-                    "type": "ProductState",
+                    "name": "users",
+                    "type": "UserState",
                     "optional": false,
                     "description": "",
-                    "line": 8
+                    "line": 12
                 }
             ],
             "indexSignatures": [],
@@ -171,17 +171,17 @@
         },
         {
             "name": "State",
-            "id": "interface-State-43a22f54fde5d31739111730886652ec-2",
-            "file": "src/app/user/state/user.reducer.ts",
+            "id": "interface-State-50ea5e701735bab47ae4f20d51e52aa0-2",
+            "file": "src/app/products/state/product.reducer.ts",
             "type": "interface",
-            "sourceCode": "import { User } from '../user';\r\n\r\n/* NgRx */\r\nimport { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport * as UserActions from './user.actions';\r\nimport * as AppState from '../../state/app.state';\r\nimport { NullVisitor } from '@angular/compiler/src/render3/r3_ast';\r\nimport { Theme, base } from '../../theme/theme';\r\n\r\n\r\nexport interface State extends AppState.State {\r\n  users: UserState;\r\n}\r\n\r\n// State for this feature (User)\r\nexport interface UserState {\r\n  maskUserName: boolean;\r\n  isAuthenticated: boolean;\r\n  loginToken: string;\r\n  currentUser: User;\r\n  users: User[],\r\n  theme: Theme,\r\n  error: string;\r\n}\r\n\r\nconst initialState: UserState = {\r\n  maskUserName: true,\r\n  isAuthenticated: false,\r\n  loginToken: '',\r\n  error: '',\r\n  currentUser: null,\r\n  theme: base,\r\n  users: []\r\n};\r\n\r\nexport const getUserFeatureState = createFeatureSelector<UserState>('users');\r\n\r\nexport const getMaskUserName = createSelector(\r\n  getUserFeatureState,\r\n  state => state.maskUserName\r\n);\r\n\r\nexport const getCurrentUser = createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n);\r\n\r\nexport const getAccessToken = createSelector(\r\n  getUserFeatureState, \r\n  state => state.loginToken\r\n);\r\n\r\nexport const getUserLoggedInState = createSelector(\r\n  getUserFeatureState, (state): boolean => state.isAuthenticated\r\n);\r\n\r\nexport const getCurrentTheme = createSelector(\r\n  getUserFeatureState, (state): Theme => state.theme\r\n);\r\n\r\nexport const userReducer = createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n);",
+            "sourceCode": "import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport { Product } from '../product';\r\nimport * as AppState from '../../state/app.state';\r\n\r\nimport * as ProductActions from './product.action';\r\n\r\nexport interface State extends AppState.State {\r\n    products: ProductState;\r\n}\r\n\r\nexport interface ProductState {\r\n    showProductCode: boolean;\r\n    currentProductId: number;\r\n    products: Product[];\r\n    error: string;\r\n}\r\n\r\nconst initialState: ProductState = {\r\n    showProductCode: true,\r\n    currentProductId: null,\r\n    products: [],\r\n    error: ''\r\n}\r\n\r\nconst getProductFeatureState = createFeatureSelector<ProductState>('products');\r\n\r\nexport const getShowProductCode = createSelector(getProductFeatureState, state => state?.showProductCode);\r\n\r\nexport const getCurrentProductId = createSelector(getProductFeatureState, state => state?.currentProductId);\r\n\r\nexport const getCurrentProduct = createSelector(\r\n    getProductFeatureState,\r\n    getCurrentProductId,\r\n    (state, currentProductId) => {\r\n        if(currentProductId === 0) {\r\n            return {\r\n                id: 0,\r\n                productName: '',\r\n                productCode: 'New',\r\n                description: '',\r\n                starRating: 0\r\n            }\r\n        } else {\r\n            return currentProductId ? state.products.find(f=> f.id === currentProductId) : null;\r\n        }\r\n    }\r\n);\r\n\r\nexport const getProducts = createSelector(getProductFeatureState, state => state?.products);\r\n\r\nexport const getError = createSelector(getProductFeatureState, state => state?.error);\r\n\r\nexport const productReducer = createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state?.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n);",
             "properties": [
                 {
-                    "name": "users",
-                    "type": "UserState",
+                    "name": "products",
+                    "type": "ProductState",
                     "optional": false,
                     "description": "",
-                    "line": 12
+                    "line": 8
                 }
             ],
             "indexSignatures": [],
@@ -259,10 +259,10 @@
         },
         {
             "name": "UserState",
-            "id": "interface-UserState-43a22f54fde5d31739111730886652ec",
+            "id": "interface-UserState-99dfeb8512574a357fe260e0c18adffa",
             "file": "src/app/user/state/user.reducer.ts",
             "type": "interface",
-            "sourceCode": "import { User } from '../user';\r\n\r\n/* NgRx */\r\nimport { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport * as UserActions from './user.actions';\r\nimport * as AppState from '../../state/app.state';\r\nimport { NullVisitor } from '@angular/compiler/src/render3/r3_ast';\r\nimport { Theme, base } from '../../theme/theme';\r\n\r\n\r\nexport interface State extends AppState.State {\r\n  users: UserState;\r\n}\r\n\r\n// State for this feature (User)\r\nexport interface UserState {\r\n  maskUserName: boolean;\r\n  isAuthenticated: boolean;\r\n  loginToken: string;\r\n  currentUser: User;\r\n  users: User[],\r\n  theme: Theme,\r\n  error: string;\r\n}\r\n\r\nconst initialState: UserState = {\r\n  maskUserName: true,\r\n  isAuthenticated: false,\r\n  loginToken: '',\r\n  error: '',\r\n  currentUser: null,\r\n  theme: base,\r\n  users: []\r\n};\r\n\r\nexport const getUserFeatureState = createFeatureSelector<UserState>('users');\r\n\r\nexport const getMaskUserName = createSelector(\r\n  getUserFeatureState,\r\n  state => state.maskUserName\r\n);\r\n\r\nexport const getCurrentUser = createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n);\r\n\r\nexport const getAccessToken = createSelector(\r\n  getUserFeatureState, \r\n  state => state.loginToken\r\n);\r\n\r\nexport const getUserLoggedInState = createSelector(\r\n  getUserFeatureState, (state): boolean => state.isAuthenticated\r\n);\r\n\r\nexport const getCurrentTheme = createSelector(\r\n  getUserFeatureState, (state): Theme => state.theme\r\n);\r\n\r\nexport const userReducer = createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n);",
+            "sourceCode": "import { User } from '../user';\r\n\r\n/* NgRx */\r\nimport { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';\r\nimport * as UserActions from './user.actions';\r\nimport * as AppState from '../../state/app.state';\r\nimport { NullVisitor } from '@angular/compiler/src/render3/r3_ast';\r\nimport { Theme, base } from '../../theme/theme';\r\n\r\n\r\nexport interface State extends AppState.State {\r\n  users: UserState;\r\n}\r\n\r\n// State for this feature (User)\r\nexport interface UserState {\r\n  maskUserName: boolean;\r\n  isAuthenticated: boolean;\r\n  loginToken: string;\r\n  currentUser: User;\r\n  users: User[],\r\n  theme: Theme,\r\n  error: string;\r\n}\r\n\r\nconst initialState: UserState = {\r\n  maskUserName: true,\r\n  isAuthenticated: false,\r\n  loginToken: '',\r\n  error: '',\r\n  currentUser: null,\r\n  theme: base,\r\n  users: []\r\n};\r\n\r\nexport const getUserFeatureState = createFeatureSelector<UserState>('users');\r\n\r\nexport const getMaskUserName = createSelector(\r\n  getUserFeatureState,\r\n  state => state.maskUserName\r\n);\r\n\r\nexport const getCurrentUser = createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state?.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n);\r\n\r\nexport const getAccessToken = createSelector(\r\n  getUserFeatureState, \r\n  state => state.loginToken\r\n);\r\n\r\nexport const getUserLoggedInState = createSelector(\r\n  getUserFeatureState, (state): boolean => state?.isAuthenticated\r\n);\r\n\r\nexport const getCurrentTheme = createSelector(\r\n  getUserFeatureState, (state): Theme => state?.theme\r\n);\r\n\r\nexport const userReducer = createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state?.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n);",
             "properties": [
                 {
                     "name": "currentUser",
@@ -1432,7 +1432,7 @@
         },
         {
             "name": "MenuComponent",
-            "id": "component-MenuComponent-c8026ddd6a87dbcc6998041208235199",
+            "id": "component-MenuComponent-5fe06f5223f348858f81666cfddb1f26",
             "file": "src/app/home/menu.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1456,28 +1456,28 @@
                     "type": "Theme",
                     "optional": false,
                     "description": "",
-                    "line": 18
+                    "line": 17
                 },
                 {
                     "name": "availableThemes",
                     "type": "Theme[]",
                     "optional": false,
                     "description": "",
-                    "line": 19
+                    "line": 18
                 },
                 {
                     "name": "currentUser",
                     "type": "User",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 19
                 },
                 {
                     "name": "isChecked",
                     "type": "boolean",
                     "optional": false,
                     "description": "",
-                    "line": 22
+                    "line": 21
                 },
                 {
                     "name": "pageTitle",
@@ -1485,7 +1485,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 20
                 }
             ],
             "methodsClass": [
@@ -1495,7 +1495,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 58
+                    "line": 57
                 },
                 {
                     "name": "ngOnInit",
@@ -1503,7 +1503,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 46
+                    "line": 45
                 },
                 {
                     "name": "toggleTheme",
@@ -1516,7 +1516,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 51,
+                    "line": 50,
                     "jsdoctags": [
                         {
                             "name": "$event",
@@ -1533,7 +1533,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { Router } from '@angular/router';\r\n\r\nimport { UserState, getCurrentUser, getCurrentTheme } from '../user/state/user.reducer';\r\nimport * as UserActions from '../user/state/user.actions';\r\nimport { Store } from '@ngrx/store';\r\nimport { Observable } from 'rxjs';\r\nimport { User } from '../user/user';\r\nimport { ThemeService } from '../theme/theme.service';\r\nimport { Theme, dark, base } from '../theme/theme';\r\n\r\n@Component({\r\n  selector: 'pm-menu',\r\n  templateUrl: './menu.component.html',\r\n  styleUrls: ['./menu.component.css']\r\n})\r\nexport class MenuComponent implements OnInit {\r\n  activeTheme: Theme;\r\n  availableThemes: Theme[];\r\n  currentUser: User;\r\n  pageTitle = 'Product Management';\r\n  isChecked: boolean;\r\n\r\n  get isLoggedIn(): boolean {\r\n    return this.currentUser ? true : false;\r\n  }\r\n\r\n  get userName(): string {\r\n    if (this.currentUser) {\r\n      return this.currentUser.firstname + ' ' + this.currentUser.lastname;\r\n    }\r\n    return '';\r\n  }\r\n\r\n  constructor(private store: Store<UserState>, \r\n    private router: Router,\r\n    private themeService: ThemeService\r\n  ) { \r\n    this.availableThemes = this.themeService.getAvailableThemes();\r\n    this.store.select(getCurrentTheme).subscribe( theme=> { \r\n      this.activeTheme = theme; \r\n      this.isChecked = this.activeTheme === dark;\r\n    });\r\n  }\r\n\r\n  ngOnInit(): void {\r\n    this.store.select(getCurrentUser).subscribe( user => this.currentUser = user);\r\n    this.store.dispatch(UserActions.listUsers());\r\n  }\r\n\r\n  toggleTheme($event) { \r\n    let _theme: Theme = base; \r\n    if($event.currentTarget.checked) _theme = dark;\r\n    this.themeService.setActiveTheme(_theme);\r\n    this.store.dispatch(UserActions.setCurrentTheme({ theme: _theme}));\r\n  }\r\n\r\n  logOut(): void {\r\n    this.store.dispatch(UserActions.logout());\r\n    this.router.navigate(['/welcome']);\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { Router } from '@angular/router';\r\n\r\nimport { UserState, getCurrentUser, getCurrentTheme } from '../user/state/user.reducer';\r\nimport * as UserActions from '../user/state/user.actions';\r\nimport { Store } from '@ngrx/store';\r\nimport { User } from '../user/user';\r\nimport { ThemeService } from '../theme/theme.service';\r\nimport { Theme, dark, base } from '../theme/theme';\r\n\r\n@Component({\r\n  selector: 'pm-menu',\r\n  templateUrl: './menu.component.html',\r\n  styleUrls: ['./menu.component.css']\r\n})\r\nexport class MenuComponent implements OnInit {\r\n  activeTheme: Theme;\r\n  availableThemes: Theme[];\r\n  currentUser: User;\r\n  pageTitle = 'Product Management';\r\n  isChecked: boolean;\r\n\r\n  get isLoggedIn(): boolean {\r\n    return this.currentUser ? true : false;\r\n  }\r\n\r\n  get userName(): string {\r\n    if (this.currentUser) {\r\n      return this.currentUser.firstname + ' ' + this.currentUser.lastname;\r\n    }\r\n    return '';\r\n  }\r\n\r\n  constructor(private store: Store<UserState>, \r\n    private router: Router,\r\n    private themeService: ThemeService\r\n  ) { \r\n    this.availableThemes = this.themeService.getAvailableThemes();\r\n    this.store.select(getCurrentTheme).subscribe( theme=> { \r\n      this.activeTheme = theme; \r\n      this.isChecked = this.activeTheme === dark;\r\n    });\r\n  }\r\n\r\n  ngOnInit(): void {\r\n    this.store.select(getCurrentUser).subscribe( user => this.currentUser = user);\r\n    this.store.dispatch(UserActions.listUsers());\r\n  }\r\n\r\n  toggleTheme($event) { \r\n    let _theme: Theme = base; \r\n    if($event.currentTarget.checked) _theme = dark;\r\n    this.themeService.setActiveTheme(_theme);\r\n    this.store.dispatch(UserActions.setCurrentTheme({ theme: _theme}));\r\n  }\r\n\r\n  logOut(): void {\r\n    this.store.dispatch(UserActions.logout());\r\n    this.router.navigate(['/welcome']);\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1559,7 +1559,7 @@
                         "type": "ThemeService"
                     }
                 ],
-                "line": 33,
+                "line": 32,
                 "jsdoctags": [
                     {
                         "name": "store",
@@ -1594,7 +1594,7 @@
                         "name": "isLoggedIn",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 24
+                        "line": 23
                     }
                 },
                 "userName": {
@@ -1603,11 +1603,11 @@
                         "name": "userName",
                         "type": "string",
                         "returnType": "string",
-                        "line": 28
+                        "line": 27
                     }
                 }
             },
-            "templateData": "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n    <div class=\"container-fluid\">\r\n        <a class=\"navbar-brand\">{{pageTitle}}</a>\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item\" routerLinkActive=\"active\">\r\n                <a class=\"nav-link\" routerLink='/welcome'>Home</a>\r\n            </li>\r\n            <li class=\"nav-item\" routerLinkActive=\"active\">\r\n                <a class=\"nav-link\" routerLink='/products'>Product List</a>\r\n            </li>\r\n        </ul>\r\n        <ul class=\"navbar-nav navbar-right\">\r\n            <li class=\"nav-item\" *ngIf=\"isLoggedIn\">\r\n                <a class=\"nav-link\" routerLink='/login'>Welcome {{ userName }}</a>\r\n            </li>\r\n            <li class=\"nav-item\" *ngIf=\"!isLoggedIn\">\r\n                <a class=\"nav-link\" routerLink='/login'>Log In</a>\r\n            </li>\r\n            <li class=\"nav-item\" *ngIf=\"isLoggedIn\">\r\n                <a class=\"nav-link\" (click)=\"logOut()\" style=\"cursor: pointer\">Log Out</a>\r\n            </li>\r\n        </ul>\r\n        <div class=\"custom-control custom-switch\">\r\n            <input type=\"checkbox\" class=\"custom-control-input\" id=\"themeSwitch\" [checked]=\"isChecked\" alue=\"1\" (change)=\"toggleTheme($event)\">\r\n            <label class=\"custom-control-label\" for=\"themeSwitch\">{{activeTheme.name}}</label>\r\n        </div>\r\n    </div>\r\n</nav>"
+            "templateData": "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n    <div class=\"container-fluid\">\r\n        <a class=\"navbar-brand\">{{pageTitle}}</a>\r\n        <ul class=\"navbar-nav mr-auto\">\r\n            <li class=\"nav-item\" routerLinkActive=\"active\">\r\n                <a class=\"nav-link\" routerLink='/welcome'>Home</a>\r\n            </li>\r\n            <li class=\"nav-item\" routerLinkActive=\"active\">\r\n                <a class=\"nav-link\" routerLink='/products'>Product List</a>\r\n            </li>\r\n        </ul>\r\n        <ul class=\"navbar-nav navbar-right\">\r\n            <li class=\"nav-item\" *ngIf=\"isLoggedIn\">\r\n                <a class=\"nav-link\" routerLink='/login'>Welcome {{ userName }}</a>\r\n            </li>\r\n            <li class=\"nav-item\" *ngIf=\"!isLoggedIn\">\r\n                <a class=\"nav-link\" routerLink='/login'>Log In</a>\r\n            </li>\r\n            <li class=\"nav-item\" *ngIf=\"isLoggedIn\">\r\n                <a class=\"nav-link\" (click)=\"logOut()\" style=\"cursor: pointer\">Log Out</a>\r\n            </li>\r\n        </ul>\r\n        <div class=\"custom-control custom-switch\">\r\n            <input type=\"checkbox\" class=\"custom-control-input\" id=\"themeSwitch\" [checked]=\"isChecked\" alue=\"1\" (change)=\"toggleTheme($event)\">\r\n            <label class=\"custom-control-label\" for=\"themeSwitch\">{{activeTheme?.name}}</label>\r\n        </div>\r\n    </div>\r\n</nav>"
         },
         {
             "name": "PageComponent",
@@ -1701,7 +1701,7 @@
         },
         {
             "name": "ProductEditComponent",
-            "id": "component-ProductEditComponent-97fc65dcd749efc7b01357fe34dede15",
+            "id": "component-ProductEditComponent-e7d81daaf747f95025971905d4b2472b",
             "file": "src/app/products/product-edit/product-edit.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1757,14 +1757,14 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 21
+                    "line": 20
                 },
                 {
-                    "name": "product$",
-                    "type": "Observable<Product | null>",
+                    "name": "product",
+                    "type": "Product",
                     "optional": false,
                     "description": "",
-                    "line": 20
+                    "line": 21
                 },
                 {
                     "name": "productForm",
@@ -1791,7 +1791,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 78
+                    "line": 81
                 },
                 {
                     "name": "cancelEdit",
@@ -1804,7 +1804,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 105,
+                    "line": 108,
                     "jsdoctags": [
                         {
                             "name": "product",
@@ -1826,7 +1826,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 111,
+                    "line": 114,
                     "jsdoctags": [
                         {
                             "name": "product",
@@ -1848,7 +1848,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 82,
+                    "line": 85,
                     "jsdoctags": [
                         {
                             "name": "product",
@@ -1878,7 +1878,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 122,
+                    "line": 125,
                     "jsdoctags": [
                         {
                             "name": "originalProduct",
@@ -1895,7 +1895,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n\r\nimport { Product } from '../product';\r\nimport { GenericValidator } from '../../shared/generic-validator';\r\nimport { NumberValidators } from '../../shared/number.validator';\r\nimport { Store } from '@ngrx/store';\r\nimport { State, getCurrentProduct } from '../state/product.reducer';\r\nimport { getUserLoggedInState } from '../../user/state/user.reducer'\r\nimport * as ProductActions from '../state/product.action';\r\nimport { tap } from 'rxjs/operators';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'pm-product-edit',\r\n  templateUrl: './product-edit.component.html'\r\n})\r\nexport class ProductEditComponent implements OnInit {\r\n  isUserLoggedIn$: Observable<boolean>;\r\n  product$: Observable<Product | null>;\r\n  pageTitle = 'Product Edit';\r\n  \r\n  errorMessage = '';\r\n  productForm: FormGroup;\r\n\r\n  // Use with the generic validation message class\r\n  displayMessage: { [key: string]: string } = {};\r\n  private validationMessages: { [key: string]: { [key: string]: string } };\r\n  private genericValidator: GenericValidator;\r\n\r\n  constructor(private store: Store<State>, private fb: FormBuilder) {\r\n\r\n    // Defines all of the validation messages for the form.\r\n    // These could instead be retrieved from a file or database.\r\n    this.validationMessages = {\r\n      productName: {\r\n        required: 'Product name is required.',\r\n        minlength: 'Product name must be at least three characters.',\r\n        maxlength: 'Product name cannot exceed 50 characters.'\r\n      },\r\n      productCode: {\r\n        required: 'Product code is required.'\r\n      },\r\n      starRating: {\r\n        range: 'Rate the product between 1 (lowest) and 5 (highest).'\r\n      }\r\n    };\r\n\r\n    // Define an instance of the validator for use with this form,\r\n    // passing in this form's set of validation messages.\r\n    this.genericValidator = new GenericValidator(this.validationMessages);\r\n  }\r\n\r\n  ngOnInit(): void {\r\n    // Define the form group\r\n    this.productForm = this.fb.group({\r\n      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],\r\n      productCode: ['', Validators.required],\r\n      starRating: ['', NumberValidators.range(1, 5)],\r\n      description: ''\r\n    });\r\n\r\n    // Watch for changes to the currently selected product\r\n    this.product$ = this.store.select(getCurrentProduct).pipe(tap(\r\n      currentProduct => this.displayProduct(currentProduct)\r\n    ));\r\n\r\n    // Watch for value changes for validation\r\n    this.productForm.valueChanges.subscribe(\r\n      () => this.displayMessage = this.genericValidator.processMessages(this.productForm)\r\n    );\r\n\r\n    this.isUserLoggedIn$ = this.store.select(getUserLoggedInState);\r\n  }\r\n\r\n  // Also validate on blur\r\n  // Helpful if the user tabs through required fields\r\n  blur(): void {\r\n    this.displayMessage = this.genericValidator.processMessages(this.productForm);\r\n  }\r\n\r\n  displayProduct(product: Product | null): void {\r\n    // Set the local product property\r\n    if (product) {\r\n      // Reset the form back to pristine\r\n      this.productForm.reset();\r\n\r\n      // Display the appropriate page title\r\n      if (product.id === 0) {\r\n        this.pageTitle = 'Add Product';\r\n      } else {\r\n        this.pageTitle = `Edit Product: ${product.productName}`;\r\n      }\r\n\r\n      // Update the data on the form\r\n      this.productForm.patchValue({\r\n        productName: product.productName,\r\n        productCode: product.productCode,\r\n        starRating: product.starRating,\r\n        description: product.description\r\n      });\r\n    }\r\n  }\r\n\r\n  cancelEdit(product: Product): void {\r\n    // Redisplay the currently selected product\r\n    // replacing any edits made\r\n    this.displayProduct(product);\r\n  }\r\n\r\n  deleteProduct(product: Product): void {\r\n    if (product && product.id) {\r\n      if (confirm(`Really delete the product: ${product.productName}?`)) {\r\n        this.store.dispatch(ProductActions.deleteProduct({ productId: product.id }));\r\n      }\r\n    } else {\r\n      // No need to delete, it was never saved\r\n     this.store.dispatch(ProductActions.clearCurrentProduct());\r\n    }\r\n  }\r\n\r\n  saveProduct(originalProduct: Product): void {\r\n    if (this.productForm.valid) {\r\n      if (this.productForm.dirty) {\r\n        // Copy over all of the original product properties\r\n        // Then copy over the values from the form\r\n        // This ensures values not on the form, such as the Id, are retained\r\n        const product = { ...originalProduct, ...this.productForm.value };\r\n\r\n        if (product.id === 0) {\r\n          this.store.dispatch(ProductActions.createProduct({ product }));\r\n        } else {\r\n          this.store.dispatch(ProductActions.updateProduct({ product }));\r\n        }\r\n      }\r\n    }\r\n  }\r\n\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { FormBuilder, FormGroup, Validators } from '@angular/forms';\r\n\r\nimport { Product } from '../product';\r\nimport { GenericValidator } from '../../shared/generic-validator';\r\nimport { NumberValidators } from '../../shared/number.validator';\r\nimport { Store } from '@ngrx/store';\r\nimport { State, getCurrentProduct } from '../state/product.reducer';\r\nimport { getUserLoggedInState } from '../../user/state/user.reducer'\r\nimport * as ProductActions from '../state/product.action';\r\nimport { tap } from 'rxjs/operators';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'pm-product-edit',\r\n  templateUrl: './product-edit.component.html'\r\n})\r\nexport class ProductEditComponent implements OnInit {\r\n  isUserLoggedIn$: Observable<boolean>;\r\n  pageTitle = 'Product Edit';\r\n  product: Product;\r\n\r\n  errorMessage = '';\r\n  productForm: FormGroup;\r\n\r\n  // Use with the generic validation message class\r\n  displayMessage: { [key: string]: string } = {};\r\n  private validationMessages: { [key: string]: { [key: string]: string } };\r\n  private genericValidator: GenericValidator;\r\n  \r\n  constructor(private store: Store<State>, private fb: FormBuilder) {\r\n\r\n    // Defines all of the validation messages for the form.\r\n    // These could instead be retrieved from a file or database.\r\n    this.validationMessages = {\r\n      productName: {\r\n        required: 'Product name is required.',\r\n        minlength: 'Product name must be at least three characters.',\r\n        maxlength: 'Product name cannot exceed 50 characters.'\r\n      },\r\n      productCode: {\r\n        required: 'Product code is required.'\r\n      },\r\n      starRating: {\r\n        range: 'Rate the product between 1 (lowest) and 5 (highest).'\r\n      }\r\n    };\r\n\r\n    // Define an instance of the validator for use with this form,\r\n    // passing in this form's set of validation messages.\r\n    this.genericValidator = new GenericValidator(this.validationMessages);\r\n  }\r\n\r\n  ngOnInit(): void {\r\n    // Define the form group\r\n    this.productForm = this.fb.group({\r\n      productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],\r\n      productCode: ['', Validators.required],\r\n      starRating: ['', NumberValidators.range(1, 5)],\r\n      description: ''\r\n    });\r\n\r\n    // Watch for changes to the currently selected product\r\n    this.store.select(getCurrentProduct).subscribe(currentProduct=> {\r\n      if(currentProduct) {\r\n         this.displayProduct(currentProduct);\r\n         this.product = currentProduct;\r\n      }\r\n    });\r\n\r\n    // Watch for value changes for validation\r\n    this.productForm.valueChanges.subscribe(\r\n      () => this.displayMessage = this.genericValidator.processMessages(this.productForm)\r\n    );\r\n\r\n    this.isUserLoggedIn$ = this.store.select(getUserLoggedInState);\r\n  }\r\n\r\n  // Also validate on blur\r\n  // Helpful if the user tabs through required fields\r\n  blur(): void {\r\n    this.displayMessage = this.genericValidator.processMessages(this.productForm);\r\n  }\r\n\r\n  displayProduct(product: Product | null): void {\r\n    // Set the local product property\r\n    if (product) {\r\n      // Reset the form back to pristine\r\n      this.productForm.reset();\r\n\r\n      // Display the appropriate page title\r\n      if (product.id === 0) {\r\n        this.pageTitle = 'Add Product';\r\n      } else {\r\n        this.pageTitle = `Edit Product: ${product.productName}`;\r\n      }\r\n\r\n      // Update the data on the form\r\n      this.productForm.patchValue({\r\n        productName: product.productName,\r\n        productCode: product.productCode,\r\n        starRating: product.starRating,\r\n        description: product.description\r\n      });\r\n    }\r\n  }\r\n\r\n  cancelEdit(product: Product): void {\r\n    // Redisplay the currently selected product\r\n    // replacing any edits made\r\n    this.displayProduct(product);\r\n  }\r\n\r\n  deleteProduct(product: Product): void {\r\n    if (product && product.id) {\r\n      if (confirm(`Really delete the product: ${product.productName}?`)) {\r\n        this.store.dispatch(ProductActions.deleteProduct({ productId: product.id }));\r\n      }\r\n    } else {\r\n      // No need to delete, it was never saved\r\n     this.store.dispatch(ProductActions.clearCurrentProduct());\r\n    }\r\n  }\r\n\r\n  saveProduct(originalProduct: Product): void {\r\n    if (this.productForm.valid) {\r\n      if (this.productForm.dirty) {\r\n        // Copy over all of the original product properties\r\n        // Then copy over the values from the form\r\n        // This ensures values not on the form, such as the Id, are retained\r\n        const product = { ...originalProduct, ...this.productForm.value };\r\n\r\n        if (product.id === 0) {\r\n          this.store.dispatch(ProductActions.createProduct({ product }));\r\n        } else {\r\n          this.store.dispatch(ProductActions.updateProduct({ product }));\r\n        }\r\n      }\r\n    }\r\n  }\r\n\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -1933,11 +1933,11 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"card\" *ngIf=\"product$ | async as product\">\r\n    <div class=\"card-header\">\r\n        {{pageTitle}}\r\n    </div>\r\n    <div class=\"card-body\">\r\n        <form novalidate (ngSubmit)=\"saveProduct(product)\" [formGroup]=\"productForm\">\r\n            <fieldset>\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"productNameId\">Product Name</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <input [ngClass]=\"{'is-invalid': displayMessage.productName }\" class=\"form-control\" id=\"productNameId\" type=\"text\" placeholder=\"Name (required)\" formControlName=\"productName\" (blur)=\"blur()\" />\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.productName\">\r\n              {{displayMessage.productName}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"productCodeId\">Product Code</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <input [ngClass]=\"{'is-invalid': displayMessage.productCode}\" class=\"form-control\" id=\"productCodeId\" type=\"text\" placeholder=\"Code (required)\" formControlName=\"productCode\" (blur)=\"blur()\" />\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.productCode\">\r\n              {{displayMessage.productCode}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"starRatingId\">Star Rating (1-5)</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <input [ngClass]=\"{'is-invalid': displayMessage.starRating}\" class=\"form-control\" id=\"starRatingId\" type=\"text\" placeholder=\"Rating\" formControlName=\"starRating\" />\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.starRating\">\r\n              {{displayMessage.starRating}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"descriptionId\">Description</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <textarea [ngClass]=\"{'is-invalid': displayMessage.description}\" class=\"form-control\" id=\"descriptionId\" placeholder=\"Description\" rows=3 formControlName=\"description\">\r\n            </textarea>\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.description\">\r\n              {{ displayMessage.description}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"col-md-10 col-md-offset-2\" *ngIf=\"isUserLoggedIn$ | async; else loginMessage\">\r\n                        <span>\r\n              <button class=\"btn btn-primary\"\r\n                      type=\"submit\"\r\n                      style=\"width:80px;margin-right:10px\"\r\n                      [disabled]=\"!productForm.valid || !productForm.dirty\">\r\n                Save\r\n              </button>\r\n            </span>\r\n                        <span>\r\n              <button class=\"btn btn-light\"\r\n                      type=\"button\"\r\n                      style=\"width:80px;margin-right:10px\"\r\n                      (click)=\"cancelEdit(product)\">\r\n                Cancel\r\n              </button>\r\n            </span>\r\n                        <span>\r\n              <button class=\"btn btn-light\"\r\n                      type=\"button\"\r\n                      style=\"width:80px\"\r\n                      (click)=\"deleteProduct(product)\">\r\n                Delete\r\n              </button>\r\n            </span>\r\n                    </div>\r\n                    <ng-template #loginMessage>\r\n                        <p class=\"text-warning\">Please login to perform add, edit and delete operation.</p>\r\n                    </ng-template>\r\n                </div>\r\n            </fieldset>\r\n        </form>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"errorMessage\" class=\"alert alert-danger\">\r\n    Error: {{ errorMessage }}\r\n</div>"
+            "templateData": "<div class=\"card\" *ngIf=\"product\">\r\n    <div class=\"card-header\">\r\n        {{pageTitle}}\r\n    </div>\r\n    <div class=\"card-body\">\r\n        <form novalidate (ngSubmit)=\"saveProduct(product)\" [formGroup]=\"productForm\">\r\n            <fieldset>\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"productNameId\">Product Name</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <input [ngClass]=\"{'is-invalid': displayMessage.productName }\" class=\"form-control\" id=\"productNameId\" type=\"text\" placeholder=\"Name (required)\" formControlName=\"productName\" (blur)=\"blur()\" />\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.productName\">\r\n              {{displayMessage.productName}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"productCodeId\">Product Code</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <input [ngClass]=\"{'is-invalid': displayMessage.productCode}\" class=\"form-control\" id=\"productCodeId\" type=\"text\" placeholder=\"Code (required)\" formControlName=\"productCode\" (blur)=\"blur()\" />\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.productCode\">\r\n              {{displayMessage.productCode}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"starRatingId\">Star Rating (1-5)</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <input [ngClass]=\"{'is-invalid': displayMessage.starRating}\" class=\"form-control\" id=\"starRatingId\" type=\"text\" placeholder=\"Rating\" formControlName=\"starRating\" />\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.starRating\">\r\n              {{displayMessage.starRating}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group row\">\r\n                    <label class=\"col-md-3 col-form-label\" for=\"descriptionId\">Description</label>\r\n\r\n                    <div class=\"col-md-9\">\r\n                        <textarea [ngClass]=\"{'is-invalid': displayMessage.description}\" class=\"form-control\" id=\"descriptionId\" placeholder=\"Description\" rows=3 formControlName=\"description\">\r\n            </textarea>\r\n                        <span class=\"invalid-feedback\" *ngIf=\"displayMessage.description\">\r\n              {{ displayMessage.description}}\r\n            </span>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"col-md-10 col-md-offset-2\" *ngIf=\"isUserLoggedIn$ | async; else loginMessage\">\r\n                        <span>\r\n              <button class=\"btn btn-primary\"\r\n                      type=\"submit\"\r\n                      style=\"width:80px;margin-right:10px\"\r\n                      [disabled]=\"!productForm.valid || !productForm.dirty\">\r\n                Save\r\n              </button>\r\n            </span>\r\n                        <span>\r\n              <button class=\"btn btn-light\"\r\n                      type=\"button\"\r\n                      style=\"width:80px;margin-right:10px\"\r\n                      (click)=\"cancelEdit(product)\">\r\n                Cancel\r\n              </button>\r\n            </span>\r\n                        <span>\r\n              <button class=\"btn btn-light\"\r\n                      type=\"button\"\r\n                      style=\"width:80px\"\r\n                      (click)=\"deleteProduct(product)\">\r\n                Delete\r\n              </button>\r\n            </span>\r\n                    </div>\r\n                    <ng-template #loginMessage>\r\n                        <p class=\"text-warning\">Please login to perform add, edit and delete operation.</p>\r\n                    </ng-template>\r\n                </div>\r\n            </fieldset>\r\n        </form>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"errorMessage\" class=\"alert alert-danger\">\r\n    Error: {{ errorMessage }}\r\n</div>"
         },
         {
             "name": "ProductListComponent",
-            "id": "component-ProductListComponent-09bb44bb0be8b338baca5b722a480403",
+            "id": "component-ProductListComponent-86e8ce8c7498163d214e2b1f9994b469",
             "file": "src/app/products/product-list/product-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1986,8 +1986,9 @@
                     "line": 18
                 },
                 {
-                    "name": "products$",
-                    "type": "Observable<Product[]>",
+                    "name": "products",
+                    "defaultValue": "[]",
+                    "type": "Product[]",
                     "optional": false,
                     "description": "",
                     "line": 24
@@ -2014,7 +2015,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 40
+                    "line": 44
                 },
                 {
                     "name": "newProduct",
@@ -2022,7 +2023,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 44
+                    "line": 48
                 },
                 {
                     "name": "ngOnInit",
@@ -2043,7 +2044,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 48,
+                    "line": 52,
                     "jsdoctags": [
                         {
                             "name": "product",
@@ -2060,7 +2061,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { Store } from '@ngrx/store';\r\n\r\nimport { Product } from '../product';\r\nimport { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../state/product.reducer';\r\nimport * as ProductActions from '../state/product.action';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'pm-product-list',\r\n  templateUrl: './product-list.component.html',\r\n  styleUrls: ['./product-list.component.css']\r\n})\r\nexport class ProductListComponent implements OnInit {\r\n  errorMessage$: Observable<string>;\r\n  displayCode$: Observable<boolean>;\r\n  selectedProduct$: Observable<Product>;\r\n  pageTitle = 'Products';\r\n\r\n  displayCode: boolean;\r\n\r\n  // Used to highlight the selected product in the list\r\n  selectedProduct: Product | null;\r\n  products$: Observable<Product[]>;\r\n  \r\n  constructor(private store:Store<State>) { }\r\n\r\n  ngOnInit(): void {\r\n    this.store.dispatch(ProductActions.loadProducts());\r\n\r\n    this.products$ = this.store.select(getProducts);\r\n\r\n    this.errorMessage$ = this.store.select(getError);\r\n\r\n    this.selectedProduct$ = this.store.select(getCurrentProduct);\r\n\r\n    this.displayCode$ = this.store.select(getShowProductCode);\r\n  }\r\n\r\n  checkChanged(): void {\r\n    this.store.dispatch(ProductActions.toggleProductCode());\r\n  }\r\n\r\n  newProduct(): void {\r\n    this.store.dispatch(ProductActions.initializeCurrentProduct());\r\n  }\r\n\r\n  productSelected(product: Product): void {\r\n    this.store.dispatch(ProductActions.setCurrentProduct(\r\n      { currentProductId: product.id }\r\n    ));\r\n  }\r\n}\r\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\r\nimport { Store } from '@ngrx/store';\r\n\r\nimport { Product } from '../product';\r\nimport { State, getShowProductCode, getCurrentProduct, getProducts, getError } from '../state/product.reducer';\r\nimport * as ProductActions from '../state/product.action';\r\nimport { Observable } from 'rxjs';\r\n\r\n@Component({\r\n  selector: 'pm-product-list',\r\n  templateUrl: './product-list.component.html',\r\n  styleUrls: ['./product-list.component.css']\r\n})\r\nexport class ProductListComponent implements OnInit {\r\n  errorMessage$: Observable<string>;\r\n  displayCode$: Observable<boolean>;\r\n  selectedProduct$: Observable<Product>;\r\n  pageTitle = 'Products';\r\n\r\n  displayCode: boolean;\r\n\r\n  // Used to highlight the selected product in the list\r\n  selectedProduct: Product | null;\r\n  products: Product[] = [];\r\n  \r\n  constructor(private store:Store<State>) { }\r\n\r\n  ngOnInit(): void {\r\n    this.store.dispatch(ProductActions.loadProducts());\r\n\r\n    this.store.select(getProducts).subscribe(res=>{\r\n      if(res) {\r\n        this.products = res;\r\n      }\r\n    });\r\n\r\n    this.errorMessage$ = this.store.select(getError);\r\n\r\n    this.selectedProduct$ = this.store.select(getCurrentProduct);\r\n\r\n    this.displayCode$ = this.store.select(getShowProductCode);\r\n  }\r\n\r\n  checkChanged(): void {\r\n    this.store.dispatch(ProductActions.toggleProductCode());\r\n  }\r\n\r\n  newProduct(): void {\r\n    this.store.dispatch(ProductActions.initializeCurrentProduct());\r\n  }\r\n\r\n  productSelected(product: Product): void {\r\n    this.store.dispatch(ProductActions.setCurrentProduct(\r\n      { currentProductId: product.id }\r\n    ));\r\n  }\r\n}\r\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2092,7 +2093,7 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div class=\"card\">\r\n\r\n    <div class=\"card-header\">\r\n        {{pageTitle}}\r\n    </div>\r\n\r\n    <div class=\"card-body\" *ngIf=\"products$ | async as products\">\r\n        <div class=\"list-group\">\r\n            <button class=\"list-group-item list-group-item-action rounded-0\" *ngFor=\"let product of products\" [ngClass]=\"{'active': product?.id === (selectedProduct$ | async)?.id}\" (click)=\"productSelected(product)\">{{ product.productName }}\r\n        <ng-container *ngIf=\"displayCode$ | async\">\r\n          ({{ product.productCode }})\r\n        </ng-container>\r\n      </button>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"card-footer\">\r\n        <div class=\"row\">\r\n            <div class=\"form-check col-md-7\">\r\n                <label>\r\n          <input class=\"form-check-input\"\r\n                 type=\"checkbox\"\r\n                 (change)=\"checkChanged()\"\r\n                 [checked]=\"displayCode$ | async\">\r\n          Display Product Code\r\n        </label>\r\n            </div>\r\n            <div class=\"col-md-4 text-right\">\r\n                <button class=\"btn btn-primary\" (click)=\"newProduct()\">\r\n          Add\r\n        </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"errorMessage$ | async as errorMessage\" class=\"alert alert-danger\">\r\n    Error: {{ errorMessage }}\r\n</div>"
+            "templateData": "<div class=\"card\">\r\n\r\n    <div class=\"card-header\">\r\n        {{pageTitle}}\r\n    </div>\r\n\r\n    <div class=\"card-body\" *ngIf=\"products.length\">\r\n        <div class=\"list-group\">\r\n            <button class=\"list-group-item list-group-item-action rounded-0\" *ngFor=\"let product of products\" [ngClass]=\"{'active': product?.id === (selectedProduct$ | async)?.id}\" (click)=\"productSelected(product)\">{{ product.productName }}\r\n        <ng-container *ngIf=\"displayCode$ | async\">\r\n          ({{ product.productCode }})\r\n        </ng-container>\r\n      </button>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"card-footer\">\r\n        <div class=\"row\">\r\n            <div class=\"form-check col-md-7\">\r\n                <label>\r\n          <input class=\"form-check-input\"\r\n                 type=\"checkbox\"\r\n                 (change)=\"checkChanged()\"\r\n                 [checked]=\"displayCode$ | async\">\r\n          Display Product Code\r\n        </label>\r\n            </div>\r\n            <div class=\"col-md-4 text-right\">\r\n                <button class=\"btn btn-primary\" (click)=\"newProduct()\">\r\n          Add\r\n        </button>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"errorMessage$ | async as errorMessage\" class=\"alert alert-danger\">\r\n    Error: {{ errorMessage }}\r\n</div>"
         },
         {
             "name": "ProductShellComponent",
@@ -2804,7 +2805,7 @@
                 "subtype": "variable",
                 "file": "src/app/products/state/product.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(getProductFeatureState, state => state.currentProductId)"
+                "defaultValue": "createSelector(getProductFeatureState, state => state?.currentProductId)"
             },
             {
                 "name": "getCurrentTheme",
@@ -2812,7 +2813,7 @@
                 "subtype": "variable",
                 "file": "src/app/user/state/user.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): Theme => state.theme\r\n)"
+                "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): Theme => state?.theme\r\n)"
             },
             {
                 "name": "getCurrentUser",
@@ -2820,7 +2821,7 @@
                 "subtype": "variable",
                 "file": "src/app/user/state/user.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n)"
+                "defaultValue": "createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state?.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n)"
             },
             {
                 "name": "getError",
@@ -2828,7 +2829,7 @@
                 "subtype": "variable",
                 "file": "src/app/products/state/product.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(getProductFeatureState, state => state.error)"
+                "defaultValue": "createSelector(getProductFeatureState, state => state?.error)"
             },
             {
                 "name": "getMaskUserName",
@@ -2852,7 +2853,7 @@
                 "subtype": "variable",
                 "file": "src/app/products/state/product.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(getProductFeatureState, state => state.products)"
+                "defaultValue": "createSelector(getProductFeatureState, state => state?.products)"
             },
             {
                 "name": "getRegisterReferenceState",
@@ -2868,7 +2869,7 @@
                 "subtype": "variable",
                 "file": "src/app/products/state/product.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(getProductFeatureState, state => state.showProductCode)"
+                "defaultValue": "createSelector(getProductFeatureState, state => state?.showProductCode)"
             },
             {
                 "name": "getUserFeatureState",
@@ -2884,7 +2885,7 @@
                 "subtype": "variable",
                 "file": "src/app/user/state/user.reducer.ts",
                 "type": "",
-                "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): boolean => state.isAuthenticated\r\n)"
+                "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): boolean => state?.isAuthenticated\r\n)"
             },
             {
                 "name": "initializeCurrentProduct",
@@ -2898,17 +2899,17 @@
                 "name": "initialState",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/products/state/product.reducer.ts",
-                "type": "ProductState",
-                "defaultValue": "{\r\n    showProductCode: true,\r\n    currentProductId: null,\r\n    products: [],\r\n    error: ''\r\n}"
+                "file": "src/app/user/state/user.reducer.ts",
+                "type": "UserState",
+                "defaultValue": "{\r\n  maskUserName: true,\r\n  isAuthenticated: false,\r\n  loginToken: '',\r\n  error: '',\r\n  currentUser: null,\r\n  theme: base,\r\n  users: []\r\n}"
             },
             {
                 "name": "initialState",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/user/state/user.reducer.ts",
-                "type": "UserState",
-                "defaultValue": "{\r\n  maskUserName: true,\r\n  isAuthenticated: false,\r\n  loginToken: '',\r\n  error: '',\r\n  currentUser: null,\r\n  theme: base,\r\n  users: []\r\n}"
+                "file": "src/app/products/state/product.reducer.ts",
+                "type": "ProductState",
+                "defaultValue": "{\r\n    showProductCode: true,\r\n    currentProductId: null,\r\n    products: [],\r\n    error: ''\r\n}"
             },
             {
                 "name": "initialState",
@@ -3116,13 +3117,13 @@
                 "subtype": "variable",
                 "file": "src/app/products/state/product.reducer.ts",
                 "type": "",
-                "defaultValue": "createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n)"
+                "defaultValue": "createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state?.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n)"
             },
             {
                 "name": "products",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/product-edit.stories.ts",
+                "file": "src/stories/product-list.stories.ts",
                 "type": "Product[]",
                 "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
             },
@@ -3131,14 +3132,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/product-shell.stories.ts",
-                "type": "Product[]",
-                "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
-            },
-            {
-                "name": "products",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/product-list.stories.ts",
                 "type": "Product[]",
                 "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
             },
@@ -3252,7 +3245,7 @@
                 "subtype": "variable",
                 "file": "src/stories/app.stories.ts",
                 "type": "Story<AppComponent>",
-                "defaultValue": "(args: AppComponent) => ({\r\n    component: AppComponent,\r\n    templateUrl: '../app/app.component.html',\r\n    styleUrls: ['../app/app.component.css'],\r\n    moduleMetadata: {\r\n        declarations: [\r\n            AppComponent\r\n        ],\r\n        imports: [\r\n            CommonModule,\r\n            BrowserModule,\r\n            AppRoutingModule,\r\n            FormsModule,\r\n            ReactiveFormsModule,\r\n            HttpClientModule,\r\n            RouterModule.forRoot([], { useHash: true }),\r\n            StoreModule.forRoot({\r\n                'users': userReducer, \r\n                'register': registerReducer, \r\n                'products': productReducer \r\n            }),\r\n            EffectsModule.forRoot([\r\n                UserEffects, \r\n                RegisterEffects, \r\n                ProductEffects\r\n            ]),\r\n            BrowserAnimationsModule\r\n        ],\r\n        providers: [\r\n            { provide: APP_BASE_HREF, useValue: '/' },\r\n            ThemeService\r\n        ],\r\n        schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n    },\r\n    props: { args },\r\n})"
+                "defaultValue": "(args: AppComponent) => ({\r\n    component: AppComponent,\r\n    templateUrl: '../app/app.component.html',\r\n    styleUrls: ['../app/app.component.css'],\r\n    moduleMetadata: {\r\n        declarations: [\r\n            AppComponent,\r\n            ShellComponent,\r\n            WelcomeComponent,\r\n            PageNotFoundComponent\r\n        ],\r\n        imports: [\r\n            CommonModule,\r\n            BrowserModule,\r\n            AppRoutingModule,\r\n            FormsModule,\r\n            ReactiveFormsModule,\r\n            HttpClientModule,\r\n            RouterModule.forRoot([], { useHash: true }),\r\n            StoreModule.forRoot({\r\n                'users': userReducer, \r\n                'register': registerReducer, \r\n                'products': productReducer \r\n            }),\r\n            EffectsModule.forRoot([\r\n                UserEffects, \r\n                RegisterEffects, \r\n                ProductEffects\r\n            ]),\r\n            BrowserAnimationsModule\r\n        ],\r\n        providers: [\r\n            { provide: APP_BASE_HREF, useValue: '/' },\r\n            ThemeService\r\n        ],\r\n        schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n    },\r\n    props: { args },\r\n})"
             },
             {
                 "name": "Template",
@@ -3282,14 +3275,6 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/page-not-found.stories.ts",
-                "type": "Story<PageNotFoundComponent>",
-                "defaultValue": "(args: PageNotFoundComponent) => ({\r\n  component: PageNotFoundComponent,\r\n  props: args\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/stories/menu.stories.ts",
                 "type": "Story<MenuComponent>",
                 "defaultValue": "(args: MenuComponent) => ({\r\n  component: MenuComponent,\r\n  props: args\r\n})"
@@ -3298,9 +3283,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/product-edit.stories.ts",
-                "type": "Story<ProductEditComponent>",
-                "defaultValue": "(args: ProductEditComponent) => ({\r\n  component: ProductEditComponent,\r\n  props: { args, product$: of(products[0]) }\r\n})"
+                "file": "src/stories/page-not-found.stories.ts",
+                "type": "Story<PageNotFoundComponent>",
+                "defaultValue": "(args: PageNotFoundComponent) => ({\r\n  component: PageNotFoundComponent,\r\n  props: args\r\n})"
             },
             {
                 "name": "Template",
@@ -3314,6 +3299,22 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/product-edit.stories.ts",
+                "type": "Story<ProductEditComponent>",
+                "defaultValue": "(args: ProductEditComponent) => ({\r\n  component: ProductEditComponent,\r\n  props: args\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/product-list.stories.ts",
+                "type": "Story<ProductListComponent>",
+                "defaultValue": "(args: ProductListComponent) => ({\r\n  component: ProductListComponent,\r\n  props: { args, products: products }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/product-shell.stories.ts",
                 "type": "Story<ProductShellComponent>",
                 "defaultValue": "(args: ProductShellComponent) => ({\r\n  component: ProductShellComponent,\r\n  props: { args, products$: of(products) }\r\n})"
@@ -3322,9 +3323,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/product-list.stories.ts",
-                "type": "Story<ProductListComponent>",
-                "defaultValue": "(args: ProductListComponent) => ({\r\n  component: ProductListComponent,\r\n  props: { args, products$: of(products) }\r\n})"
+                "file": "src/stories/register.user.stories.ts",
+                "type": "Story<RegisterUserComponent>",
+                "defaultValue": "(args: RegisterUserComponent) => ({\r\n  component: RegisterUserComponent,\r\n  props: args\r\n})"
             },
             {
                 "name": "Template",
@@ -3333,14 +3334,6 @@
                 "file": "src/stories/shell.stories.ts",
                 "type": "Story<ShellComponent>",
                 "defaultValue": "(args: ShellComponent) => ({\r\n  component: ShellComponent,\r\n  props: args\r\n})"
-            },
-            {
-                "name": "Template",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/register.user.stories.ts",
-                "type": "Story<RegisterUserComponent>",
-                "defaultValue": "(args: RegisterUserComponent) => ({\r\n  component: RegisterUserComponent,\r\n  props: args\r\n})"
             },
             {
                 "name": "Template",
@@ -3388,7 +3381,7 @@
                 "subtype": "variable",
                 "file": "src/app/user/state/user.reducer.ts",
                 "type": "",
-                "defaultValue": "createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n)"
+                "defaultValue": "createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state?.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n)"
             },
             {
                 "name": "welcome",
@@ -3574,7 +3567,7 @@
                     "subtype": "variable",
                     "file": "src/stories/app.stories.ts",
                     "type": "Story<AppComponent>",
-                    "defaultValue": "(args: AppComponent) => ({\r\n    component: AppComponent,\r\n    templateUrl: '../app/app.component.html',\r\n    styleUrls: ['../app/app.component.css'],\r\n    moduleMetadata: {\r\n        declarations: [\r\n            AppComponent\r\n        ],\r\n        imports: [\r\n            CommonModule,\r\n            BrowserModule,\r\n            AppRoutingModule,\r\n            FormsModule,\r\n            ReactiveFormsModule,\r\n            HttpClientModule,\r\n            RouterModule.forRoot([], { useHash: true }),\r\n            StoreModule.forRoot({\r\n                'users': userReducer, \r\n                'register': registerReducer, \r\n                'products': productReducer \r\n            }),\r\n            EffectsModule.forRoot([\r\n                UserEffects, \r\n                RegisterEffects, \r\n                ProductEffects\r\n            ]),\r\n            BrowserAnimationsModule\r\n        ],\r\n        providers: [\r\n            { provide: APP_BASE_HREF, useValue: '/' },\r\n            ThemeService\r\n        ],\r\n        schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n    },\r\n    props: { args },\r\n})"
+                    "defaultValue": "(args: AppComponent) => ({\r\n    component: AppComponent,\r\n    templateUrl: '../app/app.component.html',\r\n    styleUrls: ['../app/app.component.css'],\r\n    moduleMetadata: {\r\n        declarations: [\r\n            AppComponent,\r\n            ShellComponent,\r\n            WelcomeComponent,\r\n            PageNotFoundComponent\r\n        ],\r\n        imports: [\r\n            CommonModule,\r\n            BrowserModule,\r\n            AppRoutingModule,\r\n            FormsModule,\r\n            ReactiveFormsModule,\r\n            HttpClientModule,\r\n            RouterModule.forRoot([], { useHash: true }),\r\n            StoreModule.forRoot({\r\n                'users': userReducer, \r\n                'register': registerReducer, \r\n                'products': productReducer \r\n            }),\r\n            EffectsModule.forRoot([\r\n                UserEffects, \r\n                RegisterEffects, \r\n                ProductEffects\r\n            ]),\r\n            BrowserAnimationsModule\r\n        ],\r\n        providers: [\r\n            { provide: APP_BASE_HREF, useValue: '/' },\r\n            ThemeService\r\n        ],\r\n        schemas: [CUSTOM_ELEMENTS_SCHEMA],\r\n    },\r\n    props: { args },\r\n})"
                 }
             ],
             "src/environments/environment.prod.ts": [
@@ -3612,7 +3605,7 @@
                     "subtype": "variable",
                     "file": "src/app/user/state/user.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): Theme => state.theme\r\n)"
+                    "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): Theme => state?.theme\r\n)"
                 },
                 {
                     "name": "getCurrentUser",
@@ -3620,7 +3613,7 @@
                     "subtype": "variable",
                     "file": "src/app/user/state/user.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n)"
+                    "defaultValue": "createSelector(\r\n  getUserFeatureState,\r\n  state => {\r\n    return state?.currentUser ? state.users.find(f=> f.email === state.currentUser.email) : null\r\n  }\r\n)"
                 },
                 {
                     "name": "getMaskUserName",
@@ -3644,7 +3637,7 @@
                     "subtype": "variable",
                     "file": "src/app/user/state/user.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): boolean => state.isAuthenticated\r\n)"
+                    "defaultValue": "createSelector(\r\n  getUserFeatureState, (state): boolean => state?.isAuthenticated\r\n)"
                 },
                 {
                     "name": "initialState",
@@ -3660,7 +3653,7 @@
                     "subtype": "variable",
                     "file": "src/app/user/state/user.reducer.ts",
                     "type": "",
-                    "defaultValue": "createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n)"
+                    "defaultValue": "createReducer<UserState>(\r\n  initialState,\r\n  on(UserActions.maskUserName, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      maskUserName: !state?.maskUserName\r\n    };\r\n  }),\r\n  on(UserActions.login, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      currentUser: action.user\r\n    };\r\n  }),\r\n  on(UserActions.loginSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: true,\r\n      loginToken: action.accessToken,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.loginFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.logout, (state): UserState => {\r\n    return {\r\n      ...state,\r\n      isAuthenticated: false,\r\n      currentUser: null,\r\n      loginToken: null,\r\n      error: ''\r\n    };\r\n  }),\r\n  on(UserActions.listUsersSuccess, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: action.users\r\n    }\r\n  }),\r\n  on(UserActions.listUsersFailure, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      users: [],\r\n      error: action.error,\r\n    };\r\n  }),\r\n  on(UserActions.setCurrentTheme, (state, action): UserState => {\r\n    return {\r\n      ...state,\r\n      theme: action.theme\r\n    }\r\n  })\r\n)"
                 }
             ],
             "src/app/products/state/product.reducer.ts": [
@@ -3678,7 +3671,7 @@
                     "subtype": "variable",
                     "file": "src/app/products/state/product.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(getProductFeatureState, state => state.currentProductId)"
+                    "defaultValue": "createSelector(getProductFeatureState, state => state?.currentProductId)"
                 },
                 {
                     "name": "getError",
@@ -3686,7 +3679,7 @@
                     "subtype": "variable",
                     "file": "src/app/products/state/product.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(getProductFeatureState, state => state.error)"
+                    "defaultValue": "createSelector(getProductFeatureState, state => state?.error)"
                 },
                 {
                     "name": "getProductFeatureState",
@@ -3702,7 +3695,7 @@
                     "subtype": "variable",
                     "file": "src/app/products/state/product.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(getProductFeatureState, state => state.products)"
+                    "defaultValue": "createSelector(getProductFeatureState, state => state?.products)"
                 },
                 {
                     "name": "getShowProductCode",
@@ -3710,7 +3703,7 @@
                     "subtype": "variable",
                     "file": "src/app/products/state/product.reducer.ts",
                     "type": "",
-                    "defaultValue": "createSelector(getProductFeatureState, state => state.showProductCode)"
+                    "defaultValue": "createSelector(getProductFeatureState, state => state?.showProductCode)"
                 },
                 {
                     "name": "initialState",
@@ -3726,7 +3719,7 @@
                     "subtype": "variable",
                     "file": "src/app/products/state/product.reducer.ts",
                     "type": "",
-                    "defaultValue": "createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n)"
+                    "defaultValue": "createReducer<ProductState>(\r\n    initialState,\r\n    on(ProductActions.toggleProductCode, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            showProductCode: !state?.showProductCode\r\n        };\r\n    }),\r\n    on(ProductActions.setCurrentProduct, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: action.currentProductId\r\n        }\r\n    }),\r\n    on(ProductActions.clearCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: null\r\n        }\r\n    }),\r\n    on(ProductActions.initializeCurrentProduct, (state): ProductState => {\r\n        return {\r\n            ...state,\r\n            currentProductId: 0\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsSuccess, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            products: action.products,\r\n            error: ''\r\n        }\r\n    }),\r\n    on(ProductActions.loadProductsFaliure, (state, action): ProductState => {\r\n        return {\r\n            ...state,\r\n            error: action.error\r\n        }\r\n    }),\r\n    on(ProductActions.updateProductSuccess, (state, action): ProductState => {\r\n        const updatedProducts = state.products.map(\r\n          item => action.product.id === item.id ? action.product : item);\r\n        return {\r\n          ...state,\r\n          products: updatedProducts,\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.updateProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a create, the currentProduct is the new product.\r\n      on(ProductActions.createProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: [...state.products, action.product],\r\n          currentProductId: action.product.id,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.createProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      }),\r\n      // After a delete, the currentProduct is null.\r\n      on(ProductActions.deleteProductSuccess, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          products: state.products.filter(product => product.id !== action.productId),\r\n          currentProductId: null,\r\n          error: ''\r\n        };\r\n      }),\r\n      on(ProductActions.deleteProductFailure, (state, action): ProductState => {\r\n        return {\r\n          ...state,\r\n          error: action.error\r\n        };\r\n      })\r\n)"
                 }
             ],
             "src/app/user/register/store/register-selector.ts": [
@@ -4005,20 +3998,12 @@
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "products",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "src/stories/product-edit.stories.ts",
-                    "type": "Product[]",
-                    "defaultValue": "[\r\n    {\r\n      id: 1,\r\n      productName: 'Leaf Rake',\r\n      productCode: 'GDN-0011',\r\n      description: 'Leaf rake with 48-inch wooden handle',\r\n      starRating: 3.2\r\n    } as Product,\r\n    {\r\n      id: 2,\r\n      productName: 'Garden Cart',\r\n      productCode: 'GDN-0023',\r\n      description: '15 gallon capacity rolling garden cart',\r\n      starRating: 4.2\r\n    } as Product,\r\n    {\r\n      id: 5,\r\n      productName: 'Hammer',\r\n      productCode: 'TBX-0048',\r\n      description: 'Curved claw steel hammer',\r\n      starRating: 4.8\r\n    } as Product,\r\n    {\r\n      id: 8,\r\n      productName: 'Saw',\r\n      productCode: 'TBX-0022',\r\n      description: '15-inch steel blade hand saw',\r\n      starRating: 3.7\r\n    } as Product,\r\n    {\r\n      id: 10,\r\n      productName: 'Video Game Controller',\r\n      productCode: 'GMG-0042',\r\n      description: 'Standard two-button video game controller',\r\n      starRating: 4.6\r\n    } as Product,\r\n    {\r\n      id: 13,\r\n      productName: 'HP Laptop',\r\n      productCode: 'OPU-0099',\r\n      description: '',\r\n      starRating: 4\r\n    } as Product\r\n  ]"
-                },
-                {
                     "name": "Template",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/stories/product-edit.stories.ts",
                     "type": "Story<ProductEditComponent>",
-                    "defaultValue": "(args: ProductEditComponent) => ({\r\n  component: ProductEditComponent,\r\n  props: { args, product$: of(products[0]) }\r\n})"
+                    "defaultValue": "(args: ProductEditComponent) => ({\r\n  component: ProductEditComponent,\r\n  props: args\r\n})"
                 }
             ],
             "src/stories/product-list.stories.ts": [
@@ -4044,7 +4029,7 @@
                     "subtype": "variable",
                     "file": "src/stories/product-list.stories.ts",
                     "type": "Story<ProductListComponent>",
-                    "defaultValue": "(args: ProductListComponent) => ({\r\n  component: ProductListComponent,\r\n  props: { args, products$: of(products) }\r\n})"
+                    "defaultValue": "(args: ProductListComponent) => ({\r\n  component: ProductListComponent,\r\n  props: { args, products: products }\r\n})"
                 }
             ],
             "src/stories/product-shell.stories.ts": [
@@ -5297,16 +5282,6 @@
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
                 "name": "productEdit",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/stories/product-edit.stories.ts",
-                "type": "variable",
-                "linktype": "miscellaneous",
-                "linksubtype": "variable",
-                "name": "products",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
